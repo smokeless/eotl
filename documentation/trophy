@@ -1,0 +1,99 @@
+You say: Also if you can explain to me what is going on with the cap guild
+         room.
+--> 
+'That'd be great.
+You say: That'd be great.
+--> Poi says: ya uh
+Poi says: well
+Poi says: it's a complicated issue at its core, but one which could be
+          easily fixed on the surface
+Poi says: and i really don't know why it was done the way it was
+Poi says: anyways
+Poi says: it was caused by recurssive moves
+Poi says: whenever move_player is called
+Poi says: there is a series of shit that goes on
+Poi says: it's all done in the H_MOVE_OBJECT0 hook in master.c
+Poi says: which is a giant closure
+'Right.
+You say: Right.
+--> 
+'I looked at master.c
+You say: I looked at master.c
+--> 
+'I'm still reading about closures though.
+You say: I'm still reading about closures though.
+--> 
+'I'm not rock solid on them.
+You say: I'm not rock solid on them.
+--> 
+'I get that it's a function.
+You say: I get that it's a function.
+--> Poi says: basically what's happening though
+Poi says: is eventually there is a loop that calls init in all the things in
+          the room the object is being moved in to
+Poi says: and if something in one of those init calls causes the player to
+          move again, it doesn't stop the initial move from going through
+          its paces
+'Ok, so then it's calling init(), then it's doing it again.
+You say: Ok, so then it's calling init(), then it's doing it again.
+--> Poi says: so A moves into room 1, B inside of room 1 has something happen in
+          its init (such as reinitiating combat, causing A to flee), A ends
+          up back in room 2, but init still gets called on C and D and E in
+          room 1
+'and again?
+You say: and again?
+--> Poi says: one of those inits is in the trophy_case.c
+Poi says: which has an add_action
+'Right I saw that.
+You say: Right I saw that.
+--> 
+'Also the room has an add_action for anything done.
+You say: Also the room has an add_action for anything done.
+--> Poi says: add actions fail if the object isn't in the same env
+Poi says: and that's what happened
+Poi says: nog the room add_action is fine and has nothing to do with the
+          error
+nog
+You nod nog nog nog nog.
+--> 
+'Ok.
+You say: Ok.
+--> Poi says: newthingcode has checks for this in its init()
+Axis logged on. <Mortal> (ip70-174-56-145.hr.hr.cox.net)
+Poi says: before it calls extra_init()
+Poi says: if you look at the init() in newthingcode you can see pokeys
+          little init haiku
+'But old objectcode does not?
+You say: But old objectcode does not?
+--> Poi says: which checks to make sure everyone is still in the same env before
+          calling extra_init
+Poi says: and extra_init is where add_actions SHOULD be
+'I've always put them in extra_init.
+You say: I've always put them in extra_init.
+--> Upload logged on. <Guest> (localhost.localdomain)
+Upload logged off. <Guest> (localhost.localdomain)
+'I've seen them in init();
+You say: I've seen them in init();
+--> Poi says: but for whatever reason, in the trophy_case core code, it does the
+          add_action inside its own init before any of that happens
+Poi says: given that whitewolf coded this stuff, i have to assume that there
+          was a reason for him doing that
+nod
+You nod.
+--> Poi says: but i can't figure out what that might be
+Poi says: in the grand scheme of things, this error means nothing
+Poi says: it's just a few lines in the debug log, no harm no foul
+'Ok.
+You say: Ok.
+--> 
+'That helps because I'm also trying to get a grasp on which errors are relevant.
+You say: That helps because I'm also trying to get a grasp on which errors
+         are relevant.
+--> 
+'For example, cleanup not working on purple_blade
+You say: For example, cleanup not working on purple_blade
+--> 
+'I would assume is a pretty big deal.
+You say: I would assume is a pretty big deal.
+--> Poi says: at the core, this is a problem with the H_MOVE_OBJECT0 closure and
+          recurssive moves

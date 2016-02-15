@@ -1,0 +1,118 @@
+//A poison vial. Poison some food or drink.
+//Taplash 2015
+
+#include <ansi.h>
+inherit NewThingCode;
+inherit AnsiTellCode;
+
+int poisoned;
+object poisoner;
+string action = "1827777122_*";
+
+void extra_create()
+{
+    poisoned = 0;
+    set_ids( ({ "poison", "vial of poison", "vial" }) );
+    set_short( "a vial of poison" );
+    set_long( "This is a vial of poison. It has a picture of a "
+      "crossed out dead bug on the label. It is clearly for "
+      "killing insects. The fluid inside is odorless, probably "
+      "tasteles. The label reads: \"Not for human consumption.\"" );
+    set_weight( 1 );
+    set_value( 300 );
+    set( NoStoreP, 1 );
+}
+
+string post_short( object looker )
+{
+    int chance = random( 50 ) + 1;
+    object person = looker;
+    if( poisoned == 0 )
+      return( "" );
+    
+    if( IsWizard( person ) && poisoned == 1 )
+        return( " [Poisoned]" );
+    
+    if( is_player( person ) && 
+        person->query_skill( "alertness" ) >= 40
+        && poisoned == 1 ) //no way to check alert in bg.
+          return( " [Poisoned]" );
+    
+    if( is_player( person ) && 
+        present( "site_obj", person ) != 0 
+        && poisoned == 1 )
+          return( " [Poisoned]" );
+    
+    if( is_player( person ) && 
+        chance <= 10 
+        && poisoned == 1 )
+        return( " [Poisoned]" );
+    
+    else
+        return( "" );
+}
+
+void extra_init()
+{
+    add_action( "poison", "poison" );
+    add_action( "sucker", action );
+}
+
+poison( string str )
+{
+    object poisonedItem;
+    object poisoner = THISP;
+    string action;
+    string *whatisit;
+    
+    if( !present( str, THISP ) )
+      return notify_fail( "You don't have that.\n" );
+    
+    poisonedItem = present( str, THISP );
+    
+    if( !poisonedItem->query( "heal_action" ) )
+      return notify_fail( "That is not a food or drink item.\n" );
+      
+    action = poisonedItem->query( "heal_action" );
+    poisoned = 1;
+   
+    tell_player( THISP, sprintf( "You poison %s.", poisonedItem->query( "short" ) ) );
+    tell_room( ENV( THISP ), sprintf( "%s pours a vial of liquid over %s.\n",
+      THISP->query_name(), poisonedItem->query( "short" ) ), ({ THISP }) );
+    
+    whatisit = poisonedItem->query( "id" );
+    
+    THISO->set_ids( whatisit );
+    
+    set_short( poisonedItem->query( "short" ) );
+    set_ansi_short( poisonedItem->query( "ansi_short" ) );
+    set_long( poisonedItem->query( "long" ) );
+    remove_action( "poison" );
+    destruct( poisonedItem );
+    return 1;
+}
+
+int sucker( string str )
+{
+    if( !str )
+      return 0;
+    if( member( query_ids(), str ) == -1 )
+      return 1;
+    
+    ansi_tell( THISP, sprintf( "You feel a horrible burning "
+      "sensation in your throat. Something may have been off about "
+      "%s.\n", THISO->query( "short") ), RED );
+    ansi_tell_room( ENV( THISP ), sprintf( "%s grabs %s stomach after "
+      "consuming %s.\n", THISP->query_name(), possessive( THISP ),
+      THISO->query( "short" ) ), RED, ({ THISP }) );
+    
+    int dam = THISP->query_max_hp() * 2;
+    int time = THISP->query_eval();
+    
+    object thePain = clone_object( "/lib/items/poison" );
+    thePain->set_poison( dam, time, poisoner );
+    move_object( thePain, THISP );
+    
+    destruct( THISO );
+    return 1;
+}

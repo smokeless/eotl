@@ -1,0 +1,3 @@
+whenever an object is moved into a new environment, that object
+          calls init() in every other object in the room, and every object
+          in the room calls init() in the object that moved

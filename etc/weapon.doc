@@ -1,0 +1,218 @@
+/*]=================[ NewWeaponCode Documentation ]=================[*/
+
+        HULLO and welcome to documentation for the brand new 
+    NewWeaponCode[tm].  We hope that you enjoy reading this 
+    documentaion as much as Pokey enjoyed writing accessor 
+    functions for the code.
+
+        The goal of this weapon code was to provide a method
+    for wizards to create varied weapons while maintaining a
+    simple to use program interface.  KISS!
+
+        If you are wondering what the whole new_weapon.h
+    business is about, we decided to keep all the prototypes,
+    variable delcarations, and accessor functions in one place
+    to keep them out of the way of REAL code.
+
+        We also thought we should mention that this thing
+    inherits NewThingCode.  (in case you were wondering)
+    Please read /doc/mudlib/new_thing.doc for details on the
+    functions it contains.
+
+        This is no longer NewWeaponCode, but WeaponCode.  The
+    NWC define still exists as of now (05/06/02), but it is
+    simply defined as WeaponCode, so use inherit WeaponCode; in
+    any weapon you code.
+
+status query_wielded()
+
+        This function will return TRUE if the weapon is currently 
+    wielded.  This is determined by calling query_weapon() in the
+    weapon's environment.
+
+status query_weapon()
+
+        This function will return TRUE for all objects inheriting 
+    this code.
+
+void set_base_damage( int dam )
+
+        Use this function to set the base damage for the weapon.  
+    For example, if you set this value to 4, the weapon will 
+    always have a max damage of at least 4.
+
+void set_base_speed( int spd )
+
+        Use this function to set the base speed for the weapon.  
+    The speed of a weapon determines the number of attacks the 
+    wielder will get.  For every 20 speed, the wielder gets 1 
+    attack per round.  Any digits between 20s will provide a chance 
+    of an attack.  For example, if the weapon has a speed of 27, the
+    wielder will get 1 attack per round, plus a 7-in-20 chance of 
+    having a second.
+
+void set_damage_step( float dam_stp )
+
+        Use this function to set the amount of strength necessary for
+    a point of damage.  For instance, if damage_step is set to 35, a
+    player with 70 strength would do 2 damage in addition to the base
+    damage.
+
+        Generally, larger weapons such as clubs will have lower damage
+    steps than small weapons such as daggers.
+
+void set_speed_step( float spd_stp )
+
+        Use this function to set the amount of dexterity necessary for
+    a point of speed.  For instance, if speed_step is set to 20, a
+    player with 200 dexterity would have 10 speed (1 attack/round) more
+    than the base.
+
+        Generally, smaller weapons such as nunchaku will get lower speed
+    steps than large weapons such as claymores.
+
+void set_prof_mod( float prf_mo )
+
+        The prof mod describes how much a person's proficiency affects
+    the speed and damage of the weapon.  Their proficiency is multiplied
+    by this number and added to both strength and dexterity before they
+    are used for computing the max damage and speed.  For instance, if
+    prof_mod is set to 2.5, a player with 26 prof in a weapon will have
+    65 added to both their strength and dexterity for the speed and
+    damage calculations.
+
+        Generally, edged and piercing weapons such as swords and daggers
+    have higher prof mods than blunt weapons such as clubs.
+
+void set_prof_damage_mod( float prof_dam_mod )
+void set_prof_speed_mod( float prof_speed_mod )
+
+        These are used to set a proficiency's effect on damage and speed
+     independantly of each other.  Works the same as prod_mod above.
+        
+int query_max_damage( object who )
+
+        This function is called by combat.c to see how much damage to do
+    with this weapon.  By default, this function calculates its return
+    value based on the formulas described above in the set_base_damage
+    and set_damage_step functions.  However, you may overload it to your
+    liking.
+
+        The argument 'who' will determine which player or monster the
+    max damage should be calculated for.  If no argument is passed, the 
+    environment of the weapon will be used.  If the weapon has no 
+    environment, the base_damage will be returned unmodified.
+
+int query_speed( object who )
+
+        This function is called by combat.c to see how many attacks the
+    weapon gives.  Attacks are determined as speed / 20.  By default, 
+    this function calculates its return value based on the formulas 
+    described above in the set_base_speed and set_speed_step functions.  
+    However, you may overload it to your liking.
+
+        The argument 'who' will determine which player or monster the
+    speed should be calculated for.  If no argument is passed, the 
+    environment of the weapon will be used.  If the weapon has no 
+    environment, the base_speed will be returned unmodified.
+
+void set_fatigue_cost( int ftg )
+
+        Use this function to set the amount of fatigue it will cost per
+    swing to use the weapon.  Please note that the effects of this value
+    will be reduced in combat.c based on the user's endurance skill.  No, 
+    really.  It does something, I swear!
+
+void set_proficiency( string prof )
+
+        Use this function to set the proficiency type for the weapon.
+    See the PROFICIENCYMASTER for a list of valid proficiencies
+
+void set_damage_type( string type )
+
+        Use this function to set the damage type for this weapon.
+    See the DAMREGISTRY for a list of valid damage types, but please
+    stick to edged, piercing and blunt for most purposes.
+
+void set_handed( int hands )
+
+        Use this function to set the number of hands necessary to
+    wield the weapon.  And please, don't forget the squidswords.
+
+status set_combat_messages( string *messages )
+
+        Use this function to set the array of combat messages to
+    what ever you pass as the <messages> variable.  Be careful,
+    this really needs to be an array within an even number of
+    members.  It should look something like:
+
+            ({ "hack", "hacks", "slash", "slashes" })
+
+status add_combat_message( string *messages )
+
+        Use this function to add <messages> to the weapon's array
+    of possible combat messages.  This should be an array of size
+    two.  Probably something like:
+
+            ({ "slice", "slices" })
+
+status remove_combat_message( string *messages )
+
+        Use this function to remove <messages> from the weapon's
+    array of possible combat messages.  This should be an array
+    of size two.
+
+
+string *query_combat_message()
+
+        CombatCode uses this function to return a random set of
+    possible combat messages for this weapon.
+
+status try_wield( object who )
+
+        Overload this function to add requirements for wielding
+    this weapon.  If this function returns TRUE, the weapon can
+    not be wielded by <who>.  For example, this function can
+    be used to prevent a player with less than 69 charisma
+    from wielding the weapon.
+
+void post_wield( object who )
+
+        Overload this function to do anything that needs to be
+    done upon successful wielding of this weapon by <who>.  This
+    is where one would add bonus objects or shadows.
+
+status try_unwield( object who )
+
+        Overload this function to add requirements for unwielding
+    this weapon.  If this function return TRUE, the weapon can
+    not be unwielded by <who>.  For example, This function may
+    be used to prevent <who> from unwielding the weapon until
+    it has been uncursed.  Be aware that quitting circumvents
+    this feature.
+
+void post_unwield( object who )
+
+        Overload this function to do anything that needs to be
+    done upon successful unwielding of this weapon by <who>.
+    This is where one would remove bonus objects or shadows
+    granted by post_wield().
+
+/*===================================================================*/
+
+int    query_base_damage()
+int    query_base_speed()
+float  query_damage_step()
+float  query_speed_step()
+float  query_prof_mod()
+int    query_fatigue_cost()
+string query_proficiency()
+string query_damage_type()
+int    query_handed()
+
+        Use the above functions to query any of the information set
+    by the various set_ functions described previously.
+
+/*]===[  Wrote by:       ]
+      [      POKEY &     ]
+      [      GANDALF     ]=========================================[*/

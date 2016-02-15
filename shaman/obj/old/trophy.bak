@@ -1,0 +1,24 @@
+#include <ansi.h>
+inherit TrophyCode;
+
+extra_create()
+{
+    set_ids( ({ "trophy", "spiritcatcher", "spirit catcher", 
+      "dusty spirit catcher" }) );
+    set_short( "a dusty spirit catcher" );
+    set_long( "This spirit catcher is about the size of your head. "
+      "The outter ring is made of very soft cured leather. The netting "
+      "inside has been expertly woven and catches the light beautifully. "
+      "Eagle feathers and mysterious totems dangle from the bottom. " 
+      "It seems like it would be valuable to Shaman everywhere." );
+    set_limit( 1 );
+    set_material( "leather" );
+    set( NoStoreP, 1 ); 
+    set( NoStealP, 1 );
+    set_guild( "shaman" );
+    set_vanish_message( ({ "Something rips the spirit catcher from your hands. "
+      "It vanishes.", CYAN }) );
+    set_capture_messages( ({
+     "You feel less connected to your ancestors.", CYAN,
+     "You feel better connected to your ancestors.", CYAN }) );
+}

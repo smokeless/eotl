@@ -1,0 +1,38 @@
+A lot of this will not make sense. But
+living.doc I wrote before I was wizzed. It will be very helpful.
+The Devo txt is helpful about frob stuff. You won't have to get it 100%
+but make an effort.
+note.c Is how I would like to see things formatted.
+There are other files here, ls -a to see them. The ones with the . infront
+go in your home dir.
+
+You will be spending a lot of time in ed. So man ed.
+The main things you will want to know about ed are, a to append,
+c to change a line, d to delete a line, z to scroll lines. It's
+a pain in the ass. So write your code in notepad++ then upload it
+via your client. Which I am assuming is something sensible like
+MUSHclient. In MUSHclient you can cntrl-shift-v and mass paste.
+If you have a mud client though I assume it has something like
+that included.
+
+
+The tadji list is for your tadji. They're just cool little wiz functions.
+You can spend some time figuring them out. Don't do anything stupid. I
+think I included Cycle and some other dangerous ones. There are hundreds
+and hundreds out there. I've got a very small .tadji list compared to
+a lot. More than most though. These are the ones I have found to be
+the most useful. stat will pry be the one you use the most.
+
+goto will take you to a player object. Trans will transport them
+to you.
+
+That should help get you started.
+
+
+Oh, and ps. I copied a toy I made awhile back for you to look at.
+It's not the best example of code. But it does some interesting
+things.
+
+Also alias clone to clone -s, load to load -s, ed to ed -s, dest to dest -s.
+The spam from that is really annoying and most people don't want to see
+it.

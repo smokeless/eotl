@@ -1,0 +1,25 @@
+color default
+
+color damval0 black
+color damval1 bold black
+color damval2 white
+color damval3 bold white
+color damval4 blue
+color damval5 bold blue
+color damval6 cyan
+color damval7 bold cyan
+color damval8 yellow
+color damval9 bold yellow
+color damval10 red
+color damval11 bold red
+color damval12 purple
+color damval13 bold purple
+color your_attack bold white
+
+color incapped white
+color deaths_door red
+color nasty_wounds bold red
+color pretty_hurt yellow
+color slightly_wounded bold yellow
+color few_scratches green
+color perfect bold green

@@ -1,0 +1,18 @@
+Convert thinkin about stuff to bonus obj.
+Arphen tells you: my vision is more like, you're resting...
+Arphen tells you: and you use the skill
+Arphen tells you: and then it increases your mana regen, and then it lasts
+                like skill seconds
+reply I think an object could check on heartbeat if the player is resting and do the skill.
+Tell Arphen. . .
+You tell Arphen: I think an object could check on heartbeat if the player is
+         resting and do the skill.
+--> Arphen tells you: and then after those seconds, it sends you a silly message
+Arphen tells you: so if you have 10 skill, you have to sit here and really
+                spam it to get regen going
+Arphen tells you: and if you have 50 skill, you can tab out while it does
+                work
+
+See prayer.c
+Never delay!
+Fix sling spell to remove delay, unless failed attempt.

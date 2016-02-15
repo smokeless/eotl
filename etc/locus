@@ -1,0 +1,232 @@
+1) Know how to make monsters, rooms, weapons, etc.
+----
+   a. You want your monster to pick up every item in the room, what module
+      do you inherit from MonsterCode?
+
+   b. Your container needs to be openable and closeable, what do you set?
+
+   c. Your room has invisible exits, which version of RoomCode do you use?
+
+   d. You want to make a shield, what areas should you set it to protect?
+
+   e. You want your monster to always chat whenever the chat time comes up.
+      What do you set chat_chance() to?
+----
+2) Know how to use newsreader
+----
+   a. You just posted something and realized it had a major typo in it,
+      How do you erase it?  (Your post is post 1)
+
+   b. You read the first post in the current newsgroup and want to read
+      the last 22, yet all the posts have been marked as read.  How do
+      you make it so it shows the last 22 posts as unread?
+
+   c. You want to go to the next newsgroup with new news, yet don't want to
+      bother checking all the newsgroups to find out which one has new posts,
+      and which one doesn't.  What command do you use?
+
+   d. Someone tells you about a post that you _have_ to read on a newsgroup
+      you no longer subscribe to.  How do you resubscribe to that newsgroup?
+
+   e. Someone posts something cool that you want to save to a file for
+      future reference.  How do you save that post to a file?
+----
+3) Use newsreader on daily basis
+----
+   a. Who was the latest frob?
+
+   b. What is the current topic on Wizard News?
+
+   c. In general, what gets posted on the Miscellaneous News Page?
+
+   d. What's the last few posts on Miscellaneous News about?
+
+   e. What are the latest bugs on the Player Bug Reports Page?
+
+   f. Do you know what the blackjack emote is?  Have you ever used it?
+----
+4) Know how to use channels
+----
+   a. How do you list all channels available to you?
+
+   b. How do you check who is on a channel?
+
+   c. How do you talk over the Debate channel? (no aliases)
+
+   d. How do you make Code channel a blinking red?
+
+   e. How do you set the Channel Daemon on?
+----
+5) Listen to those channels on a regular basis
+----
+   a. What is generally discussed over Code channel?
+
+   b. What is Intermud channel?
+
+   c. What topic is appropriate for Wiz channel?
+
+   d. If you listened to all the channels, which channel would spam you
+      the most?  (Assume Purge, Ricorn, Rookie, Locus, and Kelly aren't on)
+
+   e. What is DeckMaster channel used for?
+----
+6) Know /std/include/object.h what's in it, etc
+----
+   a. What object(s) includes object.h?
+
+   b. Why is object.h important? (be brief)
+
+   c. What is GetOrdLevel #define'd as?
+
+   d. What is IsWizard #define'd as?
+
+   e. Where is SetLimit and what is it used for?
+----
+7) Know the stuff in /doc/wizard, /doc/standards
+----
+   a. How much does 1 pt of healing cost if it heals hps, mana, and ftg?
+
+   b. At what sharpness should a weapon be limited?
+
+   c. How can you find where all copies of /usr/locus/open/guide are located?
+      (no wiztoys, wizbody commands only)
+
+   d. Without using any wiztoys or shadows, show how you can block everyone
+      below Elder from talking to you.
+
+   e. What would you type to move yourself into Bauhaus' inventory?
+      (no wiztoys, wizbody commands only)
+----
+8) General idea of stuff in /doc/mudlib, /doc/efun
+----
+   a. Where are the docs for GlobCode located?
+
+   b. You force someone to use an object with a this_interactive() check
+      in it, what does this_interactive() return?
+
+   c. What is the purpose of the 3rd argument for tell_room()?
+----
+   -- These are actually lfun questions --
+----
+   d. An init() clones a dragon if this_player()->query_name() == "Ed".
+      If a monster named Ed triggers the init(), would the dragon get cloned?
+      Bonus: How do you get around this?
+
+   e. When is create() or extra_create() called and how are they called?
+
+   f. How often is reset() called?
+
+   g. What should be in reset()?
+----
+9) Know basic programming functions: for, if, switch, binary operators (and, or, not)
+----
+   a. What is the value of money?
+
+      #define NUM 12
+
+      money = 180;
+      for( i = 0; i < NUM; i++ )
+          money += 10;
+   -------
+   b. Will Reflex get laid?
+
+      #define KELLY   1
+      #define PURGE   0
+      #define HANNAH -1
+
+      if( laid )
+          Reflex = laid;
+
+      i.   laid = KELLY + PURGE              
+      ii.  laid = KELLY + HANNAH             
+      iii. laid = PURGE + HANNAH
+      iv.  laid = KELLY + PURGE + HANNAH
+   -------
+   c. What happens to Purge?
+
+      Purge = 1;
+
+      switch( action )
+      {
+          case "promote": Purge++;
+          case "demote" : Purge--; break;
+          case "delete" : Purge = 0;
+          default       : Purge += killed; break;  // killed == -5
+      } /* switch() */
+
+      i.   action == promote
+      ii.  action == demote
+      iii. action == delete
+      iv.  action == kiss
+   -------
+   d. Did you pass?  (ie what gets written?)
+
+      #define TOTAL 100
+      #define RIGHT  60
+      #define WRONG  40
+      #define PASS   75
+      #define FAIL   50
+
+      if( ( RIGHT > PASS ) && ( ( RIGHT > WRONG ) || !( WRONG >= FAIL ) ) )
+          write( "Passed." + endl );
+      else
+          write( "Failed." + endl );
+   -------
+   e. How many times does Laurel pick up a dime?
+
+      for( i = 0; i < 5; i++ )
+          for( j = 0; j < 2; j++ )
+              if( j - i )
+                  command( "get dime", find_player( "laurel" ) );
+   -------
+----
+10) Know how to use ed, type h at ed prompt
+----
+    a. How do you append the file: /usr/locus/open/req to the current file?
+
+    b. How do you change the current filename to /open/quiz?
+
+    c. How do you copy the last line of the file to the first line?
+
+    d. How do you change all instances of Hannah to SexToy?
+
+    e. What command will show both the 20 lines above and 20 lines below
+       your current line?  
+
+    f. Given the line: This is a test of the stupid frob quiz.
+       What command would you use to change stupid to easy?
+----
+11) Can explain every section of code in /zone/present/xmen/monsters/mk9a.c
+----
+    a. Why do I redefine query_bonus_exp()?
+
+    b. If a player attacking the mk9 had 200 hps, 10 ftg, and 10 mana, and
+       the mk9 drains 20 hps, 20 ftg, and 20 mana, what's the attacking
+       player's final hps, ftg, and mana?
+
+    c. If there were three players attacking the mk9, and one of those
+       players had a wolf also attacking the mk9, how many attackers are
+       temporarily stunned by the Mk9's paralysis ray if the chance rolled
+       for each attacker was a 51?
+
+    d. What is the average amount of coins cloned by the mk9?
+
+    e. What is the Mk9 50% resistant to?
+----
+Coding check, mark which ones you've completed:
+   1. Workroom
+   2. Generic object (ie treasure)
+   3. Monster that can talk
+   4. Monster that can walk
+   5. Monster that can pick up things
+   6. Armor - Shield
+   7. Weapon with a special
+   8. Container that can be opened and closed
+   9. Room with add_description
+  10. Room with invisible exit
+  11. Room with cloned object in reset
+  12. Object with an add_action()
+  13. More complex things
+----
+
+-Locus 3/19/96

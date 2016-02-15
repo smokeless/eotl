@@ -1,0 +1,6 @@
+Cozminsky says: cc -p[#include <sys/inherit_list.h>] return
+                inherit_list(FINDO("/path/to/stuff"))
+Cozminsky says: or cc -p[#include <sys/inherit_list.h>] return
+                inherit_list(FINDO("/path/to/stuff"),INHLIST_TREE)
+Cozminsky says: cc -p[#include <sys/inherit_list.h>] return
+                inherit_list(THISP,INHLIST_TREE)

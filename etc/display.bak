@@ -1,0 +1,222 @@
+inherit NewThingCode;
+
+#include <facility.h>;
+
+string featured;
+int effingwhat;
+string plaque;
+string descid;
+string descs;
+
+void extra_create()
+{
+    
+    int effingwhat = random( 5 );
+    switch( effingwhat )
+    {
+        case 0 : featured = "a spirit board"; break;
+        case 1 : featured = "an ancient amulet"; break;
+        case 2 : featured = "a book of summoning"; break;
+        case 3 : featured = "a haunted doll"; break;
+        case 4 : featured = "an old fortune telling machine"; break;
+    }
+    switch( effingwhat )
+    {
+        case 0 : plaque = "This board was discovered within "
+                          "the tent of ancient shaman, it has "
+                          "been with the facility for years. "
+                          "After much testing it has been discovered "
+                          "to be a somewhat functional link to the "
+                          "world of the dead. It has been used for "
+                          "centuries as a means of communication and "
+                          "still remains popular to this day."; break;
+        case 1 : plaque = "Discovered buried deep in the desert, "
+                          "this amulet has been linked to an ancient "
+                          "nomad tribe. It was used as a form of protection "
+                          "from evil, and also the dead. The material is "
+                          "to this point unknown. Our scientists have "
+                          "jokingly dubbed it \"spiritumus\"."; break;
+        case 2 : plaque = "This is the prize of our current collection. "
+                          "It has existed for milenia, initially passed "
+                          "down verbally, every culture has had a version. "
+                          "It is the basis for all of our current experiments "
+                          "and continually manages to impress."; break;
+        case 3 : plaque = "This doll was found laying on the ground "
+                          "outside of a burned down trailer. The occupants "
+                          "did not survive. Our research has shown conclusively "
+                          "that the spirits of all those who died in that area "
+                          "are trapped within. With careful study in controlled "
+                          "conditions our researchers were even capable of "
+                          "adding new spirits to it. It seems to have a very "
+                          "limited spirit memory unfortunately."; break;
+        case 4 : plaque = "This machine was willed to our facility "
+                          "by an elderly individual who passed. He claimed "
+                          "to have built it himself using only biological "
+                          "components from those who showed psychic promise. "
+                          "It doesn't seem to predict the future, instead "
+                          "it seems to just call upon the dead directly "
+                          "for bits of information. It is charged with "
+                          "an extreme amount of psychic energy, and uses "
+                          "very little of it."; break;
+    }
+    switch( effingwhat )
+    {
+      case 0 : descid = "board"; descs =
+        "It is a circular slab of Oak. The top of the "
+        "board has letters and words burned into it. "; break;
+      case 1 : descid = "amulet"; descs =
+        "It doesn't seem to be much just a piece "
+        "of silver. It seems to be an odd item "
+        "to have on display here."; break;
+      case 2 : descid = "book"; descs =
+        "It is an old book, bound in a mix of Human, "
+        "Elf, and Gnomish skin. Runes float across the "
+        "book, and the air around it is dark."; break;
+      case 3 : descid = "doll"; descs =
+        "This porcelain doll seems to have been "
+        "burned at one point. It's once white skin "
+        "is blackened from what you assume to be "
+        "flames. One of the eyes is missing, yet "
+        "the canvas body is still intact, you wonder "
+        "how the canvas survived the fire. "; break;
+      case 4 : descid = "machine"; descs = 
+        "It looks like something you would see "
+        "at a carnival or in an arcade, aside from "
+        "some minor details. It is constructed from "
+        "bones, lots of bones. The fortune teller "
+        "sitting inside of the worn glass seems to "
+        "watch you as you walk across the room. "
+        "Her face twisted in a horrific grin. It "
+        "appears that the grin was not there initially "
+        "and was the work of some intrepid carpenter. "
+        "There is a slot on the front for coins, and "
+        "a slot for fortunes to be dispensed."; break;
+    }
+
+
+    set_ids( ({ "display" }) );
+    set_short( sprintf( "a display of %s", featured ) );
+    set_ansi_short( sprintf( "%sa display of %s", YEL, featured) );   
+    set_long( sprintf( "A large metal case with clear plexiglass windows, "
+      "set on top of a small stage. It is cordoned off with velvet rope. "
+      "At the moment it features, %s. A plaque affixed to it reads: %s",  
+      featured, plaque )  );
+    set_descs(
+      ([ sprintf("%s", descid ) : sprintf( "%s", descs ) ])
+    );
+    set_gettable( 0 );
+}
+void extra_init()
+{
+    add_action( "button", "press" );
+}
+
+int button( string arg )
+{
+    string hero = THISP->query_name();
+    object env = ENV( THISO );
+    if( !stringp( arg ) || arg != "button" )
+      {
+        return notify_fail( CAP( query_verb() ) + " what?\n" );
+      }
+    tell_player( THISP, "You press the button on the display, "
+      "gears clank and turn, the stage lowers, and comes back "
+      "up with something new.\n" );
+    tell_room( THISO, sprintf( "%s presses the button on the "
+      "display case, gears crank and turn, the stage lowers "
+      "then clanks back up with something new. \n", hero) );
+    int effingwhat = random( 5 );
+    switch( effingwhat )
+    {
+        case 0 : featured = "a spirit board"; break;
+        case 1 : featured = "an ancient amulet"; break;
+        case 2 : featured = "a book of summoning"; break;
+        case 3 : featured = "a haunted doll"; break;
+        case 4 : featured = "an old fortune telling machine"; break;
+    }
+    switch( effingwhat )
+    {
+        case 0 : plaque = "This board was discovered within "
+                          "the tent of ancient shaman, it has "
+                          "been with the facility for years. "
+                          "After much testing it has been discovered "
+                          "to be a somewhat functional link to the "
+                          "world of the dead. It has been used for "
+                          "centuries as a means of communication and "
+                          "still remains popular to this day."; break;
+        case 1 : plaque = "Discovered buried deep in the desert, "
+                          "this amulet has been linked to an ancient "
+                          "nomad tribe. It was used as a form of protection "
+                          "from evil, and also the dead. The material is "
+                          "to this point unknown. Our scientists have "
+                          "jokingly dubbed it \"spiritumus\"."; break;
+        case 2 : plaque = "This is the prize of our current collection. "
+                          "It has existed for milenia, initially passed "
+                          "down verbally, every culture has had a version. "
+                          "It is the basis for all of our current experiments "
+                          "and continually manages to impress."; break;
+        case 3 : plaque = "This doll was found laying on the ground "
+                          "outside of a burned down trailer. The occupants "
+                          "did not survive. Our research has shown conclusively "
+                          "that the spirits of all those who died in that area "
+                          "are trapped within. With careful study in controlled "
+                          "conditions our researchers were even capable of "
+                          "adding new spirits to it. It seems to have a very "
+                          "limited spirit memory unfortunately."; break;
+        case 4 : plaque = "This machine was willed to our facility "
+                          "by an elderly individual who passed. He claimed "
+                          "to have built it himself using only biological "
+                          "components from those who showed psychic promise. "
+                          "It doesn't seem to predict the future, instead "
+                          "it seems to just call upon the dead directly "
+                          "for bits of information. It is charged with "
+                          "an extreme amount of psychic energy, and uses "
+                          "very little of it."; break;
+    }
+    switch( effingwhat )
+    {
+      case 0 : descid = "board"; descs =
+        "It is a circular slab of Oak. The top of the "
+        "board has letters and words burned into it. "; break;
+      case 1 : descid = "amulet"; descs =
+        "It doesn't seem to be much just a piece "
+        "of silver. It seems to be an odd item "
+        "to have on display here."; break;
+      case 2 : descid = "book"; descs =
+        "It is an old book, bound in a mix of Human, "
+        "Elf, and Gnomish skin. Runes float across the "
+        "book, and the air around it is dark."; break;
+      case 3 : descid = "doll"; descs =
+        "This porcelain doll seems to have been "
+        "burned at one point. It's once white skin "
+        "is blackened from what you assume to be "
+        "flames. One of the eyes is missing, yet "
+        "the canvas body is still intact, you wonder "
+        "how the canvas survived the fire. "; break;
+      case 4 : descid = "machine"; descs = 
+        "It looks like something you would see "
+        "at a carnival or in an arcade, aside from "
+        "some minor details. It is constructed from "
+        "bones, lots of bones. The fortune teller "
+        "sitting inside of the worn glass seems to "
+        "watch you as you walk across the room. "
+        "Her face twisted in a horrific grin. It "
+        "appears that the grin was not there initially "
+        "and was the work of some intrepid carpenter. "
+        "There is a slot on the front for coins, and "
+        "a slot for fortunes to be dispensed."; break;
+    }
+
+
+    set_ids( ({ "display" }) );
+    set_short( sprintf( "a display of %s", featured ) );
+    set_ansi_short( sprintf( "%sa display of %s", YEL, featured) );   
+    set_long( sprintf( "A carefully cordoned off display. It contains "
+      "%s set on a small stage. Below the stage a plaque reads: %s", 
+      featured, plaque )  );
+    set_descs(
+      ([ sprintf("%s", descid ) : sprintf( "%s", descs ) ])
+    );
+    set_gettable( 0 );
+    return 1;
+}

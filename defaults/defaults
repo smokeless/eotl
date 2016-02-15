@@ -1,0 +1,111 @@
+prompt %c[cyan]%M[M ]%N[N ]%R[R ]%O%o%g[G ]%C%c[norm]>
+
+buy guide
+buy calculator
+buy chat
+buy dagger
+equip
+glow on
+
+set ansi-longs off
+set chantimes last
+set notify-level mortal
+set hist-size 20
+
+sub amu amulet
+sub b bag
+sub c corpse
+sub d down
+sub e east
+sub ke keeshka
+sub m monster
+sub n north
+sub ne northeast
+sub nw northwest
+sub p backpack
+sub prof proficiencies
+sub s south
+sub se southeast
+sub sw southwest
+sub u up
+sub w west
+
+unalias auction
+unalias debate
+unalias exa
+unalias examine
+unalias gossip
+unalias newbie
+unalias nickname
+unalias questions
+unalias radio
+unalias unnickname
+
+alias au channel auction
+alias bmu beam me up
+alias bc talk BinaryCortex
+alias ca condition all
+alias cb cross bridge
+alias cc change channel to 4
+alias cd close door
+alias cf climb through fence
+alias cl climb
+alias cr crawl under tree
+alias ct climb in truck
+alias dc Dest corpse
+alias df drain $1 ftg
+alias dh drain $1 hp
+alias dm drain $1 mana
+alias eg enter grating
+alias ek eat keeshka
+alias em emote
+alias en enter portal
+alias ep eat pie
+alias f stand
+alias g get $1 from backpack
+alias g2 get $1 $2 from backpack
+alias ga get all
+alias gc get all from corpse
+alias gl glance
+alias gm ground max
+alias gos channel gossip
+alias gr ground min
+alias id identify
+alias k kill monster
+alias km alias k kill
+alias lis look into sphere
+alias ls list
+alias nb channel newbie
+alias od open door
+alias p put $1 in backpack
+alias p2 put $1 $2 in backpack
+alias pc place claws
+alias pd pinch daisy
+alias ph place hands
+alias pp place paws
+alias pr peer
+alias pt place tentacles
+alias q consider
+alias r retrieve
+alias rb read book
+alias rd channel radio ;sing
+alias sa sell all
+alias sc score
+alias sk say kill
+alias sl slide
+alias sr search
+alias st stupor
+alias tf trade fish
+alias ts touch scarecrow
+alias ua use amulet
+alias uw unwield
+alias v zap
+alias wc wield club
+alias wh whisper
+alias whom who -pms eval
+alias whomi who -ps eval -f i:1800
+alias wk wield knife
+alias wi who -i
+alias wt watch tv
+alias ww wield sword
+alias z #!

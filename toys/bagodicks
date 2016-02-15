@@ -1,0 +1,4 @@
+
+cc() {
+tell_object( FINDP( "socialism" ), read_file("/open/bogleg/DICK.f") );
+}

@@ -1,0 +1,18 @@
+    //Created with Taplash's room zapper!@#!
+#include<city.h>
+inherit RoomPlusCode;
+void extra_create()
+{
+    set("short", "Room");
+    set("day_long", "skeletonroom!");
+    set( "descs", ([]));
+
+    set( "reset_data", ([]));
+ 
+    set( "exits", ([ /* #1 */
+  "south": "/usr/taplash/zapper/a",
+  "north": "/usr/taplash/zapper/1"
+]) );
+    add( "exits", ([ "east" : "3" ]) );
+    replace_program(); //makes the driver happy.
+}

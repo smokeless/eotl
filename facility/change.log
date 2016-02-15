@@ -1,0 +1,449 @@
+Report location: /usr/socialism/facility/room/lobby1
+Report time: Mon Jun 25 13:32:37 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+Oh my god, fix the damned it's/its errors.  They're driving me insane.
+
+After going back and changing descs, and moving things around they
+should all be fixed. Hopefully. If I missed one let me know.
+
+Report location: /usr/socialism/facility/room/basement1
+Report time: Mon Jun 25 11:41:24 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+After pushing the button and going unconscious, there should be a message
+about waking up.
+
+There is now a message.
+
+Report location: /usr/socialism/facility/room/basement
+Report time: Mon Jun 25 11:29:24 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+I should be able to look at the runes
+
+The runes now have a description.
+
+Report location: /usr/socialism/facility/room/office
+Report time: Mon Jun 25 09:33:00 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+In your code, NoTeleportP should always be sufficient to block that type of
+movement.  NoTeleportOutP and NoTeleportInP are really only for if you want
+to block one but not the other.
+
+Thanks for the heads up will be fixing it as I run across it.
+
+Report location: /usr/socialism/facility/room/lobby
+Report time: Mon Jun 25 09:30:14 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+the description of the high level researcher is boring and uninformative.  Is
+he tall, short, purple hair, blue hair, bald, etc etc.  The information
+contained is fine, but just seriously lacking.
+
+Both high and mid researchers should be much more interesting.
+
+Report location: /usr/socialism/facility/room/museum
+Report time: Mon Jun 25 00:52:45 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+/usr/socialism/facility/mon/midres#1626684 the long desc here has problems:
+His eyes glance around wildly, Him looks frightened.  Bad capitalization and
+pronoun use
+
+Hopefully all fixed!
+
+Report location: /usr/socialism/facility/room/museum
+Report time: Mon Jun 25 09:50:44 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+How am I supposed to know that cleaning this room is a viable action?  There is
+no mention at all of the room being disorangized or dirty.
+
+Fixed.
+
+Report location: /usr/socialism/facility/room/intern
+Report time: Mon Jun 25 09:36:08 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+It'd be cool if you actually wrote out some of the sayings on the posters
+
+Players can now read posters.
+
+Report location: /usr/socialism/facility/room/intern
+Report time: Mon Jun 25 09:35:28 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+I like the nap, that's funny
+
+Thanks!
+
+Report location: /usr/socialism/facility/room/intern
+Report time: Mon Jun 25 09:34:26 2012
+Report type: Bug
+Report by: Whitewolf
+Report: 
+holy run-on sentence to start this room desc
+
+Fixed.
+
+Report location: /usr/socialism/facility/room/res_lab
+Report time: Mon Jun 25 01:13:17 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+I find rifrad'd desc strange at best.  "He barely acknowledges his own
+existence."  How would I know that?  "Somehow he survived  whatever happened
+here."  Wait, what?  Something happened here?  This is the first indication
+in 4 rooms that that's the case.
+
+Had him mixed up with the second Rifrad. Fixed.
+
+
+Report location: /usr/socialism/facility/room/res_lab
+Report time: Mon Jun 25 01:11:05 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+the shelves don't have a desc.  The jars are on the top shelves.  Waht's on
+the rest?
+
+Fixed
+
+
+Report location: /usr/socialism/facility/room/res_lab
+Report time: Mon Jun 25 01:08:07 2012
+Report type: Typo
+Report by: Whitewolf
+Report:
+in the jar desc: its eyes, not it's eyes.  Its is possessive, it's is 'it is'
+
+Fixed
+
+Report location: /usr/socialism/facility/room/res_lab
+Report time: Mon Jun 25 01:06:39 2012
+Report type: Bug
+Report by: Whitewolf
+Report:
+the computer desc is missing words.
+
+Fixed.
+
+Report location: /usr/socialism/facility/room/museum
+Report:
+the comma in the mirror desc shouldn't be there
+
+Fixed
+
+Report location: /usr/socialism/facility/room/museum
+Report:
+When the book is up, I press the button and the 
+spirit board arrives.  When I press the button again, 
+the board is still here.
+
+Fixed.
+
+Report location: /usr/socialism/facility/room/museum
+Report:
+It's really lame that "push button" doesn't work.
+
+Fixed.
+
+Report:
+I want to look at the book.  Isn't that the point of 
+a museum?
+
+Fixed.
+
+Report location: /usr/socialism/facility/room/museum
+Report:
+the display description has a bad comma, after features.  
+It should be a colon or just no punctuation at all
+
+Fixed.
+
+
+Report location: /usr/socialism/facility/room/museum
+Report:
+/usr/socialism/facility/mon/midres#1626684 the long desc 
+here has problems: His eyes glance around wildly, Him 
+looks frightened.  Bad capitalization and pronoun use.
+
+Fixed lingering subjectives/possessives/objectives
+from old descs on, lowres, midres, highres.
+
+
+Report location: /usr/socialism/facility/room/lobby
+Why are there no descriptions of the exits?
+
+fixed
+
+Report location: /usr/socialism/facility/room/lobby
+Report:
+In the pamphlet, the first comma shouldn't be there.
+
+fixed
+
+Report location: /usr/socialism/facility/room/lobby
+Report:
+The note is not formatted properly.  I also think "The note says:" is
+needlessly redundant, after all I just typed 'read note'
+
+Fixed note formatting and redundancy
+
+/usr/socialism/facility/room/lobby
+What the hell is with this store here?  So far it 
+makes no sense at all.
+
+Store removed from lobby. It doesn't make thematic sense to have
+a store in the lobby.
+
+/usr/socialism/facility/room/lobby
+Report:
+appearance, not appearence
+
+Changed.
+
+/usr/socialism/facility/room/lobby
+Report:
+When you take a magazine the line is not 
+formatted properly (doesn't wrap).
+
+Fixed formatting issue.
+
+/usr/socialism/facility/room/lobby
+Report:
+Descriptions for computer, bench, table are missing.
+
+Added descriptions.
+
+
+/usr/socialism/room/outside*.c
+Report:
+I find the description in this room confusing.  The barricade
+is to the south, but there are unexplained exits to the east 
+and north.  The first line is not written well, and there is no
+indication of directionality for the facility.  Also, the 
+description of the barricade says that it blocks all physical 
+access to the facility, and yet if you go north, you are in the
+lobby of the facility with no indication that you did anything 
+but walk.
+
+Fixed descriptions. Clarified information.
+
+/usr/socialism/facility/obj/display.c
+Thoughts:
+You can look at display but you can't look at 
+doll or board.  In the switch have it set_ids() 
+to the specific item.
+
+ids not set to specific item.
+
+/usr/socialism/facility/obj/note
+I don't know for sure but Post-It is a proper noun.
+add a read language check for flavour? 
+
+This note is now tastier than ever. Players will
+now have two different meanings taken from the
+note. Depending on whether or not they have trained
+read language.
+
+/usr/socialism/facility/room/pit.c
+So, a player falls down in the pit and dies.  
+But, what if they don't die (amulet of salvation 
+or some other item) or they end up as a ghost.  
+Now what do they do?  it seems that the only option 
+is to quit.
+
+Due to the continous expansion of the Eternal sewer
+system, an intrepid worker broke through into the pit.
+The worker was never found, and the pipeline disconnected.
+However as it a very large pipe, players may now
+escape the pit by crawling out through it.
+
+/usr/socialism/facility/room/basement
+thoughts: 
+Line 49 needs a litle adjusting
+When you enter the room Skelaf says a statement. In 
+this statement he says 'Just go ahead and leap in'  
+but I can't leap in.
+
+Adjusted for syntax.
+
+/usr/socialism/facility/room/ustair.c and dstair.c
+Why did you add set("reset_data") with nothing in it.
+
+Good question. Removed.
+
+/usr/socialism/facility/room/office
+Thoughts:
+Nice auto attacking code.  No warning though if 
+you go in that direction they will attack you.  
+Could add something to the long that there is a 
+guard station or give a player a warning before 
+auto.  Also they auto when you peer
+
+Fluffius still attacks on peer, as it is a
+violation of company policy to even view this
+area. Fluffius is now clearer about his intent
+guarding the exit. Due to a myriad of law suits
+Facility 31 working closely with OSHA has installed
+a warning sign to release themselves from liability.
+
+
+/usr/socialism/facility/room/lobby
+Thoughts:
+There are multiple ways in this room for objects 
+to get cloned.  Like in the museum you might want 
+to add a way to restrict a player from having 
+multiples of the same item.
+
+Players will no longer lug around piles and
+piles of notes and pamphlets.
+
+museum.c
+
+Descriptions:
+The two way mirror on the east wall has a pretty 
+weird description.  Why are players trying to see 
+beyond the mirror?  how do they know it is a two 
+way mirror?  can't they see their ugly asses?
+
+Description fixed, players will now get an ego
+bump about their sexiness.
+
+You added the action 'clean museum' for players 
+to gain a key card.  You might want to add 
+something to restrict them from having multiple 
+key cards. Like a simple if(
+present_clone(FOBJ"keycardf", THISP)
+or something.
+        
+Players will no longer be able to get extra
+keycards.
+
+Report:
+No entry object.
+
+There is now an entry object at
+~socialism/facility/obj/entryobj.c
+
+Report:
+facility/obj/pamphlet should use format for read output
+
+I changed to tell_player as it uses the format function is this
+acceptable?
+
+Report:
+facility/obj/board doesn't respect ansi settings
+
+Board now respects ANSI settings.
+
+Report:
+I can't look at computers, notebooks, workstations
+
+Removed replace_program, You should now be able to
+look at computers. Etc.
+
+Report:
+When the lab equipment explodes, it should probably cause 
+the player to take_damage() instead of add_hp(-whatever)
+
+Chemistry equipment now uses take damage.
+
+Report:
+Are there clues anywhere to suggest that I "clean museum"?  
+If so, I missed them.
+
+Bimpni will mention that she would like someone to clean the 
+museum as part of her monstertalk. I could up the frequency
+of this if you would like.
+
+Report:
+The board syntax is kinda awkward, and when I do something 
+wrong (like type "write something") I get the error message 
+writeon what?  with no space
+
+Board now uses write on board to write on it. "writeon" is 
+now "Write on"
+
+Report:
+I know I'm not really geared up, but this fluffius character 
+is pretty hard for an eval 30-50 area
+
+He is somewhat of an eval check, if you want I'll tone him
+down. I just didn't want players getting through the area
+too quickly then not being able to xp the second half of it.
+
+Report:
+Door gives lots of errors, probably another case of 
+interference from replace_program.  Don't replace_program 
+in this room.
+
+No more replace program.
+
+Report:
+'A gust of hot air rises from the pit.' message is not respecting 
+the fact that I have set ansi off.  Also, perhaps related, there 
+is no line return at the end.
+
+basement1, and basement now respect ansi. Line return added.
+
+Report:
+Skelaf the monster desc:  'Revealing yellowing dull teeth.' is not an
+independent sentence.
+
+Sentence no longer starts with Revealing.
+
+Report:
+When I search the room (not that I had any clue to do so other than reading
+the code) I get the "You peer through..." etc message, but then I also get
+the 'Dorf roots around..." message too.
+
+There is now a hint to search included, and tell_room is working
+properly.
+
+Report:
+I get a big ole error message when I push the button... probably because in
+the push() function of the well you have  string hero =
+THISP->query_real_name()  and then later you do  hero->set(
+"facility_phase_2", 1 )  as if the 'hero' variable were an object and not a
+string.
+
+This is now fixed.
+
+Report:
+It's a little harsh to drop a buncha hints to jump down the well, and then
+kill the player for doing so.  But funny.
+
+I think it's harsh, but the player should be low enough eval to recover
+quickly. Also, I feel that the hints are pretty clearly telling the player
+that the well is full dead souls.
+
+Report:
+Also, it took a while for me to figure out the syntax for jumping.  "Jump in
+well" and variations didn't work.
+
+Syntax for wells is now fixed.
+
+Report:
+The only way out of this room is to quit out?
+
+The only time a player should ever be in this pit
+is if they are dead. I could add an additional exit
+if needs be.
+
+Report:
+Seems like the well provides a never-ending supply of xp fodder?
+
+Well is now fixed to limit xp fodder.

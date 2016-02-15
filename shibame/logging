@@ -1,0 +1,5 @@
+added a logging feature to privchat
+usage: talk <channel> /log <on|off>
+
+only wizards can configure logging.
+logs are saved to /zone/null/toys/log/privchat/channelname.log

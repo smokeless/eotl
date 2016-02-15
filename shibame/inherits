@@ -1,0 +1,3 @@
+cc return inherit_list(THISP)
+cc return inherit_list(present("camera",ENV(THISP)))
+

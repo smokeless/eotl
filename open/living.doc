@@ -1,0 +1,877 @@
+
+==============Living Documentation=====================
+by Socialism 2012
+
+Outline
+-------
+
+The purpose of this documention is to provide
+information regarding living.c. More information can
+always be found in the actual modules themselves.
+The paths are listed below.
+
+=======================================================
+
+living.c is located at /secure/player/living.c it
+is comprised of:
+
+/secure/player/living/main.c            /* Create, long, short, id */
+/secure/player/living/alignment.c       /* Alignment routines */
+/secure/player/living/inventory.c       /* inventory control code */
+/secure/player/living/armor.c           /* Handles armor and ac */
+/secure/player/living/misc.c            /* Defend command messages */
+/secure/player/living/weapon.c          /* wield/unwield/query_weapon */
+/secure/player/living/stat.c            /* stat functions */
+/secure/player/living/follow.c          /* Follow functions */
+/secure/player/living/condition.c       /* ftg, hp, etc */
+/secure/player/living/hit_location.c    /* hit location functions */
+/secure/player/living/race.c            /* race and body funcs (regen, new */
+/secure/player/living/money.c           /* Money functions - add/query */
+/secure/player/living/skill.c           /* skills */
+/secure/player/living/move.c            /* run_away, move_player, dirs */
+/secure/player/living/combat.c          /* Combat checks */
+/secure/player/living/command.c         /* verb/action functions */
+/secure/player/living/eval.c            /* eval and exp functions */
+
+===================================================
+
+main.c
+
+===================================================
+
+
+Available functions:
+
+short();
+-------
+Short will return the short of a living object, including
+title, resting status, and idle status.
+
+long();
+------
+Long will return the long description of a living object.
+
+
+id( string str );
+-----------------
+Checks a living object to see if it ids to string. String
+can also be "ghost". Returns 1 if true. 
+
+
+query_name();
+-------------
+Returns the name of a living object, if the name is
+affected by a shadow it will return the name from the
+shadow. An example of this being a stealthed player.
+
+query_real_name();
+------------------
+Returns the real name of a living object. Ignoring
+modifications to name by shadows etc.
+
+query( "PROPS" );
+-----------------
+Provides a list of all the properties set on the
+object.
+
+query();
+-------
+Checks the value of a property.
+Example:
+THISP->query( "foo" ); will return the value of
+foo.
+
+add();
+------
+Allows the addition of properties. 
+Example:
+THISP->add( "foo", 1 );
+THISP->query( "foo" ); will return 1.
+
+set();
+------
+Allows properties to be set instead of added.
+Example:
+THISP->set( "foo", 2 );
+THISP->query( "foo" ); will return 2.
+
+================================================
+
+alignment.c
+
+================================================
+
+set_alignment( int x );
+-----------------------
+Can be used to set the integer value of a living
+objects alignment.
+
+add_alignment( int x );
+-----------------------
+Will add the integer value to a living objects
+alignment.
+Example:
+THISP->add_alignment( -20 );
+Will subtract 20 from THISP current alignment.
+
+query_alignment();
+------------------
+Will return the integer value of a living objects
+alignment.
+
+query_al_title();
+-----------------
+Returns the alignment title string.
+Example:
+A player has an alignment of, -1648
+THISP->query_al_title();
+returns, malicious.
+
+
+==============================================
+
+inventory.c
+
+==============================================
+
+query_weight();
+---------------
+Returns a living objects total inventory weight.
+
+query_encumbrance();
+---------------------
+Works similiar to query weight, but will not return
+items contained in bags.
+
+check_weight( int x );
+----------------------
+Checks a living objects encumbrance to see if x
+is a viable amount of weight for it to carry.
+
+add_weight( int x );
+--------------------
+Adds weight to a living object.
+
+query_enter_ok( object ob, object unused )
+------------------------------------------
+When a living object picks up an item, this
+function checks to see if the living object
+can carry it.
+
+get_inventory_string( object looker );
+-----------------------
+Provides inventory the inventory string of a living
+object from the viewpoint of looker.
+Example:
+THISP->get_inventory_string();
+returns
+"You are carrying: 
+Item1 
+Item2 
+Item3"
+
+write_inventory( object looker );
+--------------------------------
+Writes the living objects inventory string.
+
+list_inventory();
+-----------------
+Called by a living object when they type inventory.
+Checks for darkness and then writes inventory to
+screen.
+
+destruct_inventory();
+---------------------
+Destroys all inventory on a living object.
+
+query_max_carry();
+------------------
+Checks a living objects maximum carry weight.
+
+============================================
+armor.c
+
+============================================
+
+worn( object ob );
+------------------
+Checks to see if an object is worn by a
+living object.
+
+add_natural_ac( int x );
+------------------------
+Adds x natural armor to an object.
+
+set_natural_ac( int x );
+------------------------
+Sets natural ac for an object.
+
+query_natural_ac();
+-------------------
+Returns the natural ac of an object.
+
+set_base_ac( int x );
+---------------------
+Sets the base ac of object to int.
+
+query_base_ac();
+----------------
+Returns the base ac of an object.
+
+query_shields();
+----------------
+Returns a living objects shield objects.
+
+query_cloak();
+--------------
+Returns a living objects cloak object.
+
+query_armor_worn();
+-------------------
+Returns an array of armor objects worn by a living
+object.
+
+query_armor();
+--------------
+Returns an array of hit locations with armor values.
+
+query_area_ac( string area );
+-----------------------------
+Gets the total ac from the objects in the armor_bonus
+array.
+
+wear_armor( object ob );
+--------------------------
+Causes a living object to wear ob as armor.
+
+remove_armor( object ob );
+--------------------------
+Causes a living object to remove ob.
+
+query_armor_type( string type );
+--------------------------------
+returns an array of armor armor types that a living object
+is wearing.
+
+remove_armor_type( string type, object ob );
+--------------------------------------------
+Removes an armor type from a living object.
+
+==========================================
+misc.c
+==========================================
+
+set_defend_messages( mapping messages );
+----------------------------------------
+Sets a living objects defend messages in mapping format,
+Example:
+THISP->set_defend_messages( ([ "self" : "You rush to the aid of",
+"attacker" : "rushes to the aid of", "defendee" : "rushes to your aid",
+"room" : "rushes to the aid of" ]);
+
+add_defend_message( string who, string new_msg );
+-------------------------------------------------
+Adds a defend message.
+Example:
+THISP->add_defend_message( "room", "waltzes up to help" );
+
+query_defend_messages();
+------------------------
+Returns a mapping of a living objects defend messages.
+
+query_defend_message( string who );
+----------------------------------
+Returns a living objects defend message for a specific viewer.
+room, attacker, etc.
+
+========================================
+weapon.c
+========================================
+
+query_max_damage();
+-------------------
+Queries an objects max damage.
+
+add_combat_message( string msg, string msg2 );
+----------------------------------------------
+Adds a combat message to an object.
+
+query_combat_message()
+----------------------
+Returns an objects combat messages in array format.
+
+query_weapon();
+---------------
+Returns a living objects weapon.
+
+=====================================
+stat.c
+=====================================
+
+query_starting_stat( string stat );
+-----------------------------------
+Returns the starting stats of a living object. Same
+as query_base_stat but returns the starting stat.
+if no starting stats, returns the base race stat.
+
+query_starting_stats();
+-----------------------
+Returns the starting stats array of a living object.
+
+query_base_stat( string stat );
+------------------
+Returns the base value of the stat identified by
+'stat'.  Returns -1 if stat does not exist.
+
+query_stat( string stat );
+--------------------------
+Returns the base value of a stat identified by 'stat'
+plus any bonuses from objects in the bonus objects array. Returns 0 if
+invalid stat.
+
+query_stat_total();
+-------------------
+Returns the sum of all stats including
+bonuses.
+
+query_base_stat_total();
+------------------------
+Returns the sum of all base stats.
+
+adjust_stat( string stat, int value );
+--------------------------------------
+For increasing/decreasing the value of stat
+identified by 'stat'. 
+
+change_stat( string stat, int value );
+--------------------------------------
+For changing a stat identified by 'stat'.
+
+get_stats_array();
+-----------------
+returns the array of stat names
+defined in defs.c.  Objects other than living.c may need to know
+this.  (monster.c for example)
+
+add_bonus_object( obj );
+------------------------
+add_bonus_object: Adds the object 'obj' to the bonus objects
+array.  Returns 0 if could not be added, 1 if added, and 2 if the object
+exists in the array presently.
+
+remove_bonus_object( obj );
+---------------------------
+Removes the object 'obj' from the bonus
+objects array.  Returns 1 if removed, 0 if not removed.
+
+query_bonus_array();
+--------------------
+return the list of bonus objects active
+on an object.
+
+set_base_stat( string stat, int value );
+----------------------------------------
+Sets a stat explicitly to value.  Static to avoid
+uncontrolled permanent adjustment of stats.  Returns 1 if stat was set, 0
+if not found.
+
+query_stats();
+--------------
+Returns an array of numerical stat values.
+
+reset_stats();
+--------------
+Resets a living objects stats to their initial values.
+
+query_stat_modifier( string stat );
+----------------------------------
+Returns a stat modifier for a living object.
+
+=============================================
+follow.c
+=============================================
+
+query_following();
+------------------
+Returns the object that an object is currently following.
+
+query_followers();
+------------------
+Returns objects currently follwing this object.
+
+find_follower( string name );
+----------------
+Returns a specific follower as an object.
+
+
+=============================================
+condition.c
+=============================================
+
+query_max_fatigue();
+----------------
+Returns a living objects max fatigue.
+
+query_fatigue();
+----------------
+Returns a living objects current fatigue.
+
+add_fatigue( int x );
+---------------------
+Add x fatigue to a living object.
+
+check_fatigue( int x );
+-----------------------
+If X is greater than a living objects current fatigue,
+this will return 0. Otherwise it will add -x fatigue to
+the object.
+
+query_max_mana();
+-----------------
+Return a living objects maximum mana.
+
+query_mana();
+-------------
+Return a living objects current mana.
+
+add_mana( int x );
+------------------
+Add x mana to a living creature.
+
+query_max_hp();
+---------------
+Get a living objects max hp.
+
+query_hp();
+-----------
+Get a living objects current hp.
+
+add_hp( int x );
+----------------
+Add x hp to a living object.
+
+heal( int x );
+--------------
+Add x mana, fatigue, and hp to a living object.
+
+full_heal();
+------------
+Fully heal a living object.
+
+query_player_kills( int flag );
+-------------------------------
+If flagged 1, returns bad player kills. If unflagged,
+returns all player kills.
+
+add_player_kill( int flag );
+----------------------------
+Adds a player kill. If flagged 1 adds a bad player kill.
+
+set_incap( int x )
+------------------
+Set's a the numerical value that will cause a living
+object to be incapacitated.
+
+query_incap();
+--------------
+Checks to see if a living object is incapacitated.
+
+set_heal_rate( int x );
+-----------------------
+Sets a living objects heal rate to X.
+
+set_heal_amount( int x )
+------------------------
+Sets a living objects heal amount to x.
+
+query_heal_rate();
+------------------
+Returns a living objects heal rate.
+
+query_heal_amount_();
+---------------------
+Returns a living objects heal amount.
+
+query_age();
+------------
+Returns a living objects age.
+
+query_deathObj();
+-----------------
+Returns a living objects death object.
+
+set_deathObj( string str );
+---------------------------
+Sets a living objects death object to string.
+Example:
+THISO->set_deathObj( "/obj/races/draconian" );
+
+DeathSequence( object killer, string cause, status nocorpse );
+--------------------------------------------------------------
+Kill a living object.
+
+=============================================================
+hit_location.c
+=============================================================
+
+query_hit_info( string which, mixed location );
+-----------------------------------------------
+Return hit information for string which, valid options for which
+are, name, race, damage, critical, level, and hands.
+
+query_hit_locations();
+----------------------
+Get hit locations in array format.
+
+add_hit_location( mixed info );
+-------------------------------
+Add a hit location array to a living object.
+
+remove_hit_location( string location );
+---------------------------------------
+Remove a hit location from a living object. All
+mortals love this.
+
+regenerate();
+-------------
+Restore a player to race standards.
+
+hands_free();
+-------------
+Return a living objects hands free.
+
+query_hand_name();
+------------------
+Get a living objects hand name.
+
+query_random_location();
+------------------------
+Returns a random hit location.
+
+
+
+
+================================
+race.c
+================================
+
+set_race( string str );
+-----------------------
+Set a living objects race to str.
+
+query_race();
+-------------
+Get a living objects race.
+
+query_race_ob();
+----------------
+Get a living objects race object.
+
+query_resistance( string type );
+--------------------------------
+Get a living objects resistance to type.
+
+query_all_resistances();
+------------------------
+Get an array with the types of resistances
+a living object has.
+
+
+================================
+money.c
+================================
+
+add_money( int x );
+-------------------
+Add x money to a living object.
+
+query_money();
+--------------
+Get amount of money a living object has.
+
+===============================
+skill.c
+===============================
+
+set_skill( string arg, int value );
+-----------------------------------
+Set a living objects skill in arg to value.
+
+query_base_skill( string arg );
+-------------------------------
+Get a living objects skill in arg, not including
+bonuses or modifiers.
+
+query_skill( string arg );
+--------------------------
+Get a living objects current skill in arg, including
+bonuses and modifiers.
+
+query_skills();
+---------------
+Get an array of skills that a living object has learned.
+
+query_skill_map();
+------------------
+Get a mapping of a living objects known skills and the
+values of the skills.
+Example:
+return THISP->query_skill_map();
+returns, ([ "vertigo": 18, "false light" : 20 ])
+
+set_proficiency( string arg, int value );
+-----------------------------------------
+Set a living objects proficiency in arg to value.
+
+query_base_proficiency( string arg );
+-------------------------------------
+Get a living objects proficiency before bonuses
+and modifiers.
+
+query_proficiency( string arg );
+--------------------------------
+Get a living objects proficiency with bonuses and
+modifiers.
+
+query_proficiencies();
+----------------------
+Get an array of proficiencies that a living object has learned.
+
+query_proficiency_map();
+------------------------
+Get a mapping of a living objects known proficiencies and
+their values.
+
+set_misc_proficiency( string arg, int value );
+----------------------------------------------
+set misc proficiency arg, to int.
+
+query_misc_proficiency( string arg );
+------------------------------------
+Get the value of a misc proficiency.
+
+query_misc_proficiencies();
+--------------------------
+Get an array of the misc proficiencies that a living object
+has learned.
+
+query_misc_proficiency_map();
+-----------------------------
+Get a mapping of the misc proficiencies that a living object
+has learned.
+
+
+=====================================
+move.c
+=====================================
+
+set_wimpy( int x );
+-------------------
+Set a living objects wimpy to x.
+
+query_wimpy();
+--------------
+Get a living objects wimpy value.
+
+set_wimpy_dir( string str );
+---------------------------
+Set a living objects wimpy direction to string.
+
+query_wimpydir();
+-----------------
+Get a living objects wimpy direction.
+
+set_msgin( string str );
+-----------------------
+Set a living objects room entrance message to str.
+
+query_msgin();
+--------------
+Get a living objects entrance message.
+
+set_msgout( string str );
+-------------------------
+Set a living objects exit message.
+
+query_msgout();
+---------------
+Get a living objects exit message.
+
+set_mmsgin( string str );
+-------------------------
+Set a living objects magical entrance message.
+
+query_mmsgin();
+---------------
+Get a living objects magical entrance message.
+
+set_mmsgout( string str )
+-------------------------
+Set a living objects magical exit message.
+
+query_mmsgout();
+----------------
+Get a living objects magical exit message.
+
+query_last_room();
+------------------
+Get a living objects last room location.
+
+query_current_room();
+---------------------
+Get a living objects current room.
+
+===========================================
+combat.c
+Many functions in combat.c already have
+man pages.
+===========================================
+
+query_special_combat();
+-----------------------
+If there is a special combat object, this function
+will return it.
+
+query_combat_delay();
+---------------------
+Returns a living objects current combat delay.
+
+set_combat_delay( int delay );
+-------------------
+Set a living objects combat delay to int.
+
+add_combat_delay( int delay );
+-------------------
+Add int combat delay to a living object.
+
+query_hit_delay();
+------------------
+Return a living objects hit delay.
+
+add_hit_delay( int delay );
+---------------------------
+Add delay to a living objects combat.
+
+set_hit_delay( int delay );
+---------------------------
+set a living objects hit delay.
+
+query_delay();
+--------------
+Returns combat or hit delay.
+
+set_delay_message( string str );
+--------------------------------
+Set a living objects delay message.
+
+query_delay_message();
+----------------------
+Returns a living objects delay message.
+
+set_mercy( status num );
+------------------------
+Set a living objects mercy. 1 for on, 0 for off.
+
+query_mercy();
+--------------
+Returns a living objects mercy. 1 for on, 0 for off.
+
+query_attacks();
+----------------
+Return number of attacks an object has. This will
+change based on weapons, dex, etc.
+
+attackable( object att );
+-------------------------
+Will return 1 if a living object is attackable by att.
+Example:
+THISP->attackable( find_player( "foo" ) );
+if foo is online, and THISP is in fact attackable at the moment,
+this will return 1.
+
+valid_target( object vic );
+---------------------------
+Checks to see if an attackers victim is a valid target.
+It should always be used victim->attackable( attacker );
+
+is_target( object ob );
+-----------------------
+Checks to see if ob is a living objects target.
+
+set_target( object ob );
+------------------------
+Sets a living objects target ob.
+
+remove_target( object ob );
+---------------------------
+Removes ob from target list.
+
+query_targets();
+----------------
+Returns a living objects target list. In array format.
+
+add_target( object ob );
+------------------------
+Adds ob to a living objects target list.
+
+add_defend( object ob );
+------------------------
+Add ob to a living objects defender list.
+
+remove_defend( object ob );
+---------------------------
+Remove ob from a living objects defender list.
+
+full_clear_attack();
+--------------------
+Removes a living object from everyones attack list,
+clears a living objects attack list.
+
+reset_combat();
+---------------
+Fully resets combat. Stopping special combat, clearing combat delay,
+etc.
+
+combat_hook( object target, object attacker );
+----------------------------------------------
+A combat hook for shadows.
+
+query_attackers();
+------------------
+Returns attackers list.
+
+query_defend();
+---------------
+Returns defenders list.
+
+query_attacker();
+-----------------
+Returns a living objects last attacker.
+
+is_attacker( object ob );
+-------------------------
+Checks if ob is an attacker.
+
+===========================================
+command.c
+===========================================
+
+do_feel( string str );
+----------------------
+Cause a living object to use a feeling.
+Example:
+THISP->do_feel( "hide" );
+Player will use the hide emote.
+
+
+===========================================
+eval.c
+===========================================
+
+query_eval();
+-------------
+Get a living objects eval.
+
+query_exp_value();
+------------------
+Get a living objects experience value.

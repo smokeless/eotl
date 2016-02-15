@@ -1,0 +1,135 @@
+You said: Now i'm in the array.
+You said: But I've walked through.
+You said: It confirms that I'm all these things.
+You said: But it doesn't confirm that I am there.
+You said: In monster.c
+You said: ?
+You said: That is my thought.
+Poi said: well, you as the person aren't relevant there
+Poi said: in time_attack
+You said: well who ever walks through.
+Poi said: anyways
+Poi said: when i saw this error
+You said: I've seen it come up a few times.
+You said: In different mobs.
+Poi said: i didn't really look what it actually was
+Poi said: i assumed that it was the call_out to time_attack not being removed
+          if the mob died
+Poi said: but that actually happens in the destruct_signal
+Poi said: there are 2 other call_outs done in create() though
+Poi said: that don't get removed if the mob dies
+You said: ok
+--> Poi says: which means this error can only happen with a freshly cloned mob
+          dies withinn 1-5 seconds
+'Oh.
+You say: Oh.
+--> 
+'So it's at the top of monster.c
+You say: So it's at the top of monster.c
+--> Poi says: the bottom
+Poi says: there are 2 call_outs made there
+'See I was looking at the line error.
+You say: See I was looking at the line error.
+--> 
+'I really need to sit down and read monster.c
+You say: I really need to sit down and read monster.c
+--> Toak logged off. <Mortal> (S01064061861dd499.ok.shawcable.net)
+'And combat.c
+You say: And combat.c
+--> Gnorm logged off. <Mortal> (S01064061861dd499.ok.shawcable.net)
+'I got halfway through combat. It's a lot to grok at once though.
+You say: I got halfway through combat. It's a lot to grok at once though.
+--> Poi says: a lot of times the debug log doesn't give you the right
+          information
+nod
+You nod.
+--> Poi says: the key words were
+Poi says: call_out from destructed object
+Poi says: or whatever
+mail
+Entering mail (? for help).
+->  1    Oct 18 Watcher: yes
+    2    Oct 26 Makebail: bastardo!
+    3    Oct 26 Makebail: wait what
+    4    Oct 27 Makebail: tree x2
+    5    Oct 30 Dorf: Re: Dustman
+    6    Oct 31 Alf: Pumpkin Competition
+    7    Nov 01 Gathis: cover
+    8    Nov 04 Watcher: can too :)
+    9    Nov 05 Dorf: Re: Spriggan
+   10    Nov 12 Soghog: cant post with this character
+   11    Nov 17 Kimbo: errors
+   12    Dec 29 Redwing: Where-O-Where-R-You
+   13    Apr 13 Rine: Re: Frob
+   14    May 09 Arphen: Peace Corps
+   15    Jun 27 Rine: Fame
+   16    Jun 27 Redwing: HH vs PK
+   17    Jul 01 Rine: Re: Re: Fame
+   18    Jul 17 Klackon: Let's see if this works
+   19    Aug 05 Platypus: laf
+   20    Aug 06 Xoap: ancient well
+   21    Aug 12 Sdfwerf: thank you cozminsky
+   22    Aug 15 Cindy: uh oh, where'd EOTL go?
+   23    Sep 10 Watcher: your bodyt
+   24    Oct 10 Rine: Re: grats!
+   25    Oct 25 Arphen: is this too mean? hmm
+   26    Nov 20 Luckyshadows: (v)
+   27    Nov 20 Luckyshadows: i know you 
+   28    Dec 11 Shibame: Frob App by Shibame, 2013.12.11. Feedback Appreciated. TYVM!
+   29    Dec 15 Shibame: Shibame Frob App, 2nd Draft, 2013.12.15.
+[1/38]& 
+z
+-> 30    Dec 21 Shibame: Question #1. Why do you want to be a Wizard? -- another approach. Feedback?
+   31    Dec 22 Shibame: Another approach, Question 1. 
+   32    Dec 28 Watcher: lol
+   33    Dec 30 Shibame: App
+   34    Jan 02 Jariten: gnome invisibility
+   35    Jan 02 Jariten: ]
+   36    Jan 04 Redwing: boggle
+   37    Jan 05 Poi: Re: my guess
+   38    Jan 05 Poi: couple errors for you
+[30/38]& 
+38
+Message 38
+From Poi  (Sun Jan 05 18:43:35 2014)
+To: Taplash
+Subject: couple errors for you
+
+Just to hone your skills.
+
+2014.01.05 18:33:35 Call from destructed object
+'zone/fantasy/kanori/calador/troll_marsh/mon/troll#748923' ignored.
+2014.01.05 18:33:35 program: obj/monster/monster.c, object:
+zone/fantasy/kanori/calador/troll_marsh/mon/troll#748923 line 703
+2014.01.05 18:37:13 Call from destructed object
+'zone/null/comedy/sven/mon/erik#750212' ignored.
+2014.01.05 18:37:13 program: obj/monster/monster.c, object:
+zone/null/comedy/sven/mon/erik#750212 line 703
+
+
+
+[38/38]& 
+q
+mail: deleting 0 messages.
+--> 
+'Call from destructed object.
+You say: Call from destructed object.
+--> Poi says: meaning a call_out was scheduled befoer the mod died, and wasn't
+          completed or removed before it got destructed
+'Which, so I'm looking at line 703 which is the point where the call_out errored.
+You say: Which, so I'm looking at line 703 which is the point where the
+         call_out errored.
+--> 
+'But I should be looking for call_outs that could error.
+You say: But I should be looking for call_outs that could error.
+--> Poi says: i think line 703 is the parser guessing things but i don't know
+          how that shit works
+'No idea.
+You say: No idea.
+--> 
+'Still I really appreciate the time and help you're putting into teaching me these things.
+You say: Still I really appreciate the time and help you're putting into
+         teaching me these things.
+--> 
+'It's really renewed my interest in code.
+You say: It's really renewed my interest in code.

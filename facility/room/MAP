@@ -1,0 +1,21 @@
+A = Pit
+B = Basement
+C = Stairwell
+D = Upper stairwell
+E = Intern Station
+F = Lobby
+G = Museum
+H = Outside
+I = Lockdown / Hiding???
+J = Research area A
+K = Office space
+
+
+           E J
+           | |
+         D-K-F-G-?I?
+         ^   |
+         ^   H
+         C-B
+           ^
+           A

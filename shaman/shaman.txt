@@ -1,0 +1,76 @@
+Shaman Guild:
+
+Driven from the head hunter tribe by competative brutality and aggression,
+the shaman of Eternal banded together. Their love of
+nature bonds them.
+
+Shaman are primarily a defensive guild.
+
+Skills:
+Generic: Shield, Dodge, Flee, Evade.
+
+Profs:
+staff, light axe, heavy axe, light club, heavy club,
+hands, light polearm, heavy polearm, light flail,
+heavy flail.
+
+Natural Attunement:
+A baseline skill that all shaman need.
+It helps with everything. Also makes sure
+your stuff doesn't go awry.
+
+Nature can be a cold harsh mistress. Attempting to
+control nature is the fevered dream of a madman. 
+One moment she will shield you
+in powerful lightning, the next that same lightning
+is striking you down to the ground. Attunement with
+nature allows the shaman to understand the ways of
+nature so that it will benefit them the most. Thus
+avoiding nasty surprises.
+
+Fire Blast:
+The most offensive of shaman spells. A skilled
+shaman can blast a creature with flame igniting it.
+The fire damage is not going to be extremely high,
+however it will heat up weapons/armor. Causing the
+monster to remove them. Thusly it's a disarm. Less
+of an offensive spell.
+
+Lightning Shield: Elemental air;
+The caster calls down a lightning strike
+which surrounds them them in a powerful
+shield. Outside only.
+
+Healing Rain: Elemental water;
+The shaman calls down a powerful rain which
+heals and revitalizes all that stand within
+it. Outside only.
+
+Earthquake: Elemental earth;
+A skilled shaman can shake the ground beneath them.
+Their attunement with nature allows them to maintain
+their balance. While everyone else in the room is
+shaken.
+
+Imbue Shield;
+Harnesses the powers of an element into a shield.
+Options: Earth->chance to delay, Air->chance to lighting damage, 
+Fire->chance to burn, Water->chance to heal. Will not work on
+sharpened, enhanced, or magical shields. Will not work on
+shields with a special already attached to them.
+
+Shapeshift:
+A skilled shaman is capable of shifting into different
+animals. Unfortunately they will be unable to speak.
+However the gain the power of that animal.
+They are unable to wear armor or wield weapons.
+The shamans spells are still useable as it is
+still connected to nature.
+
+Reincarnation:
+Shaman are so well connected to the earth that they
+can actually maintain their memories after death. 
+Like fight or flight can only be trained
+to 1. Instead of enhancing dodge it simply calls
+make_me_ghost. Thus avoiding DeathSequence entirely.
+Wipes all of the players unspent xp.

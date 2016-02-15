@@ -1,0 +1,19 @@
+Uses absolute path. That's an issue. Probably will upgrade to
+setting a dir to edit in, eliminating that problem.
+
+OMG I just used it and now there's errors everywhere.
+You aren't in the directory of the room you're starting
+the zapper in. This will be fixed if I add a path
+setting.
+
+WTF are these .bak files? I'm planning on implementing
+an undo function.
+
+Why is this code secure? Because it's easier for me
+to properly maintain it, and I can log the usage
+better that way.
+
+It doesn't have x,y axis awareness? It might in the future.
+
+It lags when I goto the void? It has a built in lag function
+to allow the driver to catch up in the destruct/load/clone.

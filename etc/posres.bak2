@@ -1,0 +1,89 @@
+inherit MonsterCode;
+inherit MonsterMove;
+inherit MonsterTalk;
+
+#include <facility.h>;
+
+void extra_create()
+{
+    int strmod = random( 50 );
+    int wilmod = random( 100 );
+    int intmod = random(200);
+    string variety;
+    string mrace;
+    string thismonster;    
+    set_name("an insane researcher");
+    add_alias("creature");
+    add_alias("possessed");
+    add_alias("researcher");
+    add_alias("doctor");
+    add_alias("scientist");
+    add_alias("beast");
+    add_alias("insane");
+
+    switch( random(5) ){
+      case 0 : variety = "huddled in the corner";  break;
+      case 1 : variety = "ripping at it's own face"; break;
+      case 2 : variety = "covered in it's own blood"; break; 
+      case 3 : variety = "wheezing through a broken nose"; break;
+      case 4 : variety = "vomiting all over itself"; break;
+    }
+    set_short( sprintf( "a researcher, %s.", variety ) );
+    set_long( "You can't tell whether this was a man or a woman. "
+              "It has long since passed beyond gender and "
+              "into the inhuman. Scabs fester, crack, and "
+              "bleed all over it's skin. It's eyes are gone "
+              "the sockets stained with blood. It appears that "
+              "the wounds were self inflicted."
+    );
+
+    set_alignment( "neutral" );
+    set_gender( "unknown" );
+    set_aggressive( 5 );
+    set_proficiency( "hands", 100 );
+    add_combat_message( "rip", "rips" );
+    set_chat_chance(90);
+    set_chat_rate(30);
+    add_phrase( "#say We went too far, " 
+      "and yet it's all smiles here." ); 
+    add_phrase( "#say The Darkness has shown me the light!" 
+      );
+    add_phrase( "#say I found the taste of sentient beings to be "
+      "so much sweeter than that of others." );
+    add_phrase( "#say Is this my blood?" );
+    add_phrase( "#say I will flay your skin and put you "
+      "with the rest of them." );
+    add_phrase( "#say Lost, lost, lost, lost, lost..." );
+    add_phrase( "#say Stop screaming! ");
+    add_combat_phrase( "#say I will swallow your soul!" );
+    add_combat_phrase( "#say You will feed the old ones!" );
+    add_combat_phrase( "#say Finish me, I crave the embrace!" );
+    add_combat_phrase( "#say Who will lock you in the cellar..." );
+    add_combat_phrase( "#say My pain has no meaning!" );
+    set_move_rate( 20 );
+    set_move_chance( 85 );
+    set_heal_rate( 15 );
+    set_heal_amount( 20 );
+    switch(random( 4 ) )
+    {
+      case 0 : mrace = "gnome"; break;
+      case 1 : mrace = "human"; break;
+      case 2 : mrace = "drow_elf"; break;
+      case 3 : mrace = "dwarf"; break;
+    }
+
+    set_race( mrace );
+
+
+    set_stat("str", 120 + strmod);
+    set_stat("int", 140 + intmod);
+    set_stat("wil", 50 + wilmod);
+    set_stat("con", 250);
+    set_stat("dex", 75);
+    set_stat("chr", 3);
+
+}
+    
+
+
+

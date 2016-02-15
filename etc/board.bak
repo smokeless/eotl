@@ -1,0 +1,147 @@
+#include <facility.h>
+
+inherit NewThingCode;
+
+void extra_create()
+{
+    set_ids( ({ "board", "ouija", "spirit board", "ouija board" }) );
+    set_short( "a spirit board" );
+    set_ansi_short( HIP "a spirit board" );
+    set_long( "There are a couple phrases and the entire "
+      "alphabet burned onto this old oak board. The wood is dried "
+      "and cracking, but it appears to still be useable. "
+      "It might be possible for you to divine something "
+      "with it. Then again it might not. You could just "
+      "write something out with it for fun."
+    );
+    set( NoStoreP, 1);
+    set_weight( 300 );
+    set_value( 40 );
+}
+
+void extra_init()
+{
+    add_action( "divine", "use" );
+    add_action( "divine", "divine" );
+    add_action( "makemsg", "write" );
+}
+
+int divine( string strarg )
+{
+    string *responses = grab_file( FOBJ "letters" );
+    string *words = grab_file( FOBJ "boarddict" );
+    int intel = THISP->query_stat( "int" );
+    int wil = THISP->query_stat( "wil" );
+    int power = wil + intel;
+    int resnum = random( sizeof( responses ) );
+    int wordnum = random( sizeof( words ) );
+    object hero = ENV( THISP );
+    
+    if( ENV( THISO ) != THISP )
+    {    
+      return 0;
+    }
+
+    if( !stringp( strarg ) || ( member( query_ids(), strarg ) == -1 ) )
+    {
+      return notify_fail( query_verb()  + " what?\n" );
+    } 
+
+    if( power <= 50 )
+    {
+      tell_object( THISP, sprintf( "%sYou look at the board trying to "
+        "discern what you could possibly use it for. \n"
+        "It seems very confusing. \n%s", HIP, NORM ) );
+      
+      tell_room( hero, sprintf( "%s stares at the letters on a spirit board, "
+        "totally baffled.\n", THISP->query_name() ), ({THISP}) );
+      
+      return 1;    
+    }
+    
+    if( power >= 50 && power <= 125 && THISP->query_mana() > power)
+    {
+      tell_object( THISP, sprintf( "%sThe board tugs and pulls at you, stopping "
+         "on %s.%s\n", HIP, responses[resnum], NORM) );
+      
+      tell_room( hero, sprintf( "%s gleans information from beyond.\n",
+        THISP->query_name() ), ({THISP}) );
+
+      THISP->add_mana( -power );      
+    
+      return 1;
+    }
+    
+    else if( power >= 126 && THISP->query_mana() > power )
+    {
+      tell_object( THISP, sprintf( "%sYour mind hones into the board, "
+        "it spells out %s.%s\n", HIP, words[wordnum], NORM ) );
+
+      tell_room( hero, sprintf( "%s gleans information from beyond.\n",
+        THISP->query_name() ), ({THISP}) );
+     
+      THISP->add_mana( -power );
+      
+      return 1;
+    }
+
+
+    else
+    {  
+    tell_object( THISP, sprintf( "%sYou do not have the power to do that.%s\n",
+        HIP, NORM) );
+    
+    return 1;
+    } 
+ 
+    return 1;
+} 
+
+int makemsg( string strarg )
+{
+    int chrp = THISP->query_stat( "chr" );
+    int intp = THISP->query_stat( "int" );
+    int wilp = THISP->query_stat( "wil" );
+    int ppower = wilp + intp;
+    string *ethers = grab_file( FOBJ "ether" );
+    int ethersnum = random( sizeof( ethers ) );
+    object shero = ENV( THISP );
+    string ether;
+    string passto;
+    sscanf( strarg, "%s %s",passto, ether); 
+
+    if( ENV( THISO ) != THISP )
+    {    
+      return 0;
+    }
+
+    if( !stringp( strarg ) || ( member( query_ids(), passto ) == -1 ) )
+    {
+      return notify_fail( query_verb()  + " on what?\n" );
+    }
+    if( ppower >= 176 && THISP->query_mana() > ppower && chrp > 50 )
+    {
+      
+      write_file( FOBJ "ether", sprintf("%s left %s in the ether.", 
+        THISP->query_name(), ether) );
+      tell_object( THISP, sprintf( "%sYou scrawl a message into "
+         "the ether.%s\n", HIP, NORM) );
+      tell_object( THISP, sprintf( "%sSomething comes through the ether, %s%s",
+        HIP, ethers[ethersnum], NORM) );
+      tell_room( shero, sprintf( "%s records to the ether.\n",
+        THISP->query_name() ), ({THISP}) );
+      return 1;
+    }
+    else
+    {  
+    tell_object( THISP, sprintf( "%sYou do not have the power to do that.%s\n",
+        HIP, NORM) );
+    
+    return 1;
+    } 
+}
+      
+       
+      
+      
+      

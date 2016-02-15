@@ -1,0 +1,219 @@
+My requirements (listed loosely in order of when you should learn them):
+
+Before getting frobbed:
+
+1. know how write and read mail
+2. know how to use the newsreader and read newspages on a regular basis
+3. know how to the channel command
+4. know what each level means, and be able to name a good amount of
+   arches and wizards
+
+
+Before starting to code:
+
+1. know what code channel is and USE IT
+
+2. know how to use wizshell commands (or wiztool equivilents): 
+     cat, cc, cd, clone, cp, dest, do, ed, fcs, goto, grep, load, 
+     ls, man, mkdir, more, patch, rm, rmdir, setv, source, su, 
+     where, which
+
+3. know EotL directory structure: 
+     /adm, /doc/*, /etc, /inc, /inc/global/, /lib, /log, /log/err,
+     /obj, /open, /secure, /usr, /usr/name/secure, /usr/foo/shared,
+     /usr/foo/inc, /zone, /zone/foo/bar/inc
+
+4. understand these concepts:
+   a. objects - creation, destruction, updating, clones, blueprints
+   b. files - definition, naming, writing, reading, access
+   c. variables - declaration, assignment, accessing, datatypes, 
+                  modifiers, scope, references 
+   d. functions - declaration, structure, calling, modifiers, efuns, 
+                  lfuns, simul_efuns
+
+   NOTE: this is just a conceptual level, you'll put them into 
+         practice later
+
+5. read some well-written code and learn proper formatting practice
+
+
+START CODING STUFF
+Start a project, or create a series of objects that will teach you
+different aspects of LPC.  It could be an area, but it doesn't have
+to be.  Code whatever the heck you want, as long as it teaches you
+LPC.  Start out by creating a very simple object, it could even be
+a 0-byte file.  Save it and get it to load.  The following is a list
+of things to learn how to use in your object(s).
+
+1.  write a simple lfun
+2.  use local variables
+3.  learn what the create() lfun  does
+4.  use local variables of several different types
+5.  call a local function
+6.  use global variables (and learn when you would want to use them)
+7.  write more lfuns that that different types and amounts of arguments
+    and return different types of values in different places.  be able
+    to call and pass arguments to these functions, as well as make use
+    of their return values.
+8.  use all the operators, including the arithmetic and logicsl operators,
+    but excluding the bitwise operators
+9.  write an if/else statment
+10. write a switch statment
+11. write a for loop, a while loop, and a do-while loop
+12. use #include, #define, #undef, #if, #else, #endif, #ifdef, #elsif, 
+    #ifndef
+13. Review usage of /inc/global/, /usr/foo/inc, /zone/foo/bar/inc,
+    /inc/global/object.h, and global.h
+14. build complex strings out of variables and string literals,
+    though the use of string concatination and/or string addition
+15. Learn what init() and reset() do and use them.
+16. Test data type using these efuns:
+    - intp()
+    - floatp()
+    - stringp()
+    - objectp()
+    - pointerp()
+    - mappingp()
+    - closurep()
+    - symbolp()
+    - typeof()
+    - get_type_info()
+17. Change data type using typecasting and these efuns:
+    - to_array()
+    - to_float()
+    - to_int()
+    - to_object()
+    - to_string()
+18. Manipulate objects using these efuns:
+    - clone_object()
+    - destruct()
+    - find_object()
+    - file_name()
+    - call_other() 
+    - environment()
+    - all_inventory()
+    - move_object()
+    - this_object()
+    - clonep()
+    - previous_object()
+    - present()
+19. Print messages using these efuns:
+    - write()
+    - tell_object()
+    - tell_room()
+20. Format strings using sprintf().
+21. Use add_action() with all the different flags.
+22. Learn basic array usage:
+    - define an array and know their purpose
+    - create an array
+    - read data from an array
+    - assign/modify data in an array
+23. Interact with users using these efuns (some are simul_efuns):
+    - this_player()
+    - this_interactive()
+    - find_player()
+    - users()
+    - interactive()
+    - query_once_interactive()
+24. Delay code execution using call_out().
+25. Delay code execution using heart_beat().
+26. Learn more advanced array usage:
+    - search an array
+    - copy an array
+    - determine an array's size
+    - iterate over an array
+    - compare arrays
+    - sort an array
+27. Parse a string using sscanf().
+28. Parse a string using explode().
+29. Learn basic-to-intermediate mapping usage:
+    - define a mapping and know their purpose
+    - create a mapping
+    - read data from a mapping
+    - assign/modify data in a mapping
+    - get the keys of a mapping
+    - value the values of a mapping
+    - copy a mapping
+    - determine a mapping's size
+30. Learn inheritance:
+    - understand what inheritance is and why we use it
+    - inherit functions and variables from another object
+    - learn when to #include and when to inherit
+31. Learn shadows:
+    - understand what a shadow is and why you would use it
+    - code a shadow
+    - write code to place a shadow on an object
+    - write code to remove a shadow from an object
+32. Understand all function and variable modifiers.
+33. Understand how and why to use the following lfuns:
+    - reset()
+    - id()
+    - short()
+    - long()
+    - drop()
+    - get()
+
+
+Recommended topics, but not necessary:
+
+1.  Perform file I/O with these efuns:
+    - write_file()
+    - read_file()
+    - get_dir()
+    - save_object()
+    - restore_object()
+2.  Know what uids and euids are and what purpose they serve.
+3.  Get input from a user using input_to().
+4.  Use these efuns to iterate through complex data structures:
+    - filter_array()
+    - map_array()
+    - filter_objects()
+    - map_objects()
+    - filter_mapping()
+    - map_mapping()
+    - walk_mapping()
+5.  Learn LPC regular expressions and use the regexp() efun.
+6.  Know what the master object is.
+7.  Know what the simul_efun object is.
+6.  Other useful lfuns:
+    - catch_tell()
+    - catch_write()
+    - query_prevent_shadow()
+    - clean_up()
+    - destruct_signal()
+    - query_enter_ok()
+    - query_move_ok()
+    - query_leave_ok()
+    - enter_signal()
+    - move_signal()
+    - leave_signal()
+7.  Other useful efuns:
+    - implode()
+    - command()
+    - deep_inventory()
+    - find_objects()
+    - raise_error()
+    - catch()
+    - random()
+    - replace_program()
+
+
+If you intend on coding an area for a cabal, you will probably want to
+know the different mudlib inhertables.  But that doesn't really involve
+any actual learning, since it's pretty much all through the use of
+set(), add(), remove(), or query().  If you can learn all this stuff,
+you'll have no problem picking up the different modules.  It's pretty
+much all just a matter of practice anyways.  You should probably also
+be aware of some of the different functions in the body, but that
+stuff isn't documented very well, and you can find it out on code channel
+anyways.  If you actually code objects that use all these different
+concepts/efuns/lfuns/etc, your usr will be pretty filled up by the time
+you're ready to wiz.
+
+I think the best approach would be to code a very small area in your
+usr, that makes use of all this different stuff.  When I say small, I
+mean like half a dozen rooms at the most.  Then work at making as much
+stuff _happen_ in the area, through the use of all these concepts.
+You'll learn more complex code, learn basic use of the mudlib, impress
+people with your great descriptions, and have it all bound together in
+a single theme.  If I saw a frob do that, I'd promote him on the spot.

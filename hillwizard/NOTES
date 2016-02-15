@@ -1,0 +1,158 @@
+                      Hill Wizard Guild Idea
+-------------------------------------------------------------------------------
+Hill Wizards are simple folk who stumbled upon magic by happenstance.
+They are Fighters who began to recognize that certain elaborate movements
+of their bodies would result in magical effects.  They're not very smart,
+so they don't exactly know how this all works, nor do they really care.
+Their magic is a result of sheer willpower, and the agility to perform
+these elegant maneuvers in combat situations.  As a result of a general
+lack of knowledge on this subject, a lack of incantations being recited,
+a lack of focusing for several rounds to cast spells, the outcomes of
+their spells can vary wildly, occasionally to the point of absurdity.
+The spells Hill Wizards cast are primarily connected to four schools
+of magic: magic (arcane), magic_fire, magic_elec, and magic_cold.
+Other types of magic are too advanced and complicated.
+
+They focus on light weaponry, as it enables them to utilize their magic
+shields, the source of their power.  Summoning a magic shield is a mighty
+feat, but once they figured out this step, the rest of things just sorta
+fell into place.
+
+Shield blocks with their magic shield consume a portion of mana, and award
+one Freedom Magic point.  If they lack sufficient mana to sustain the shield
+being hit, the shield disintegrates and a new one must then be summoned.
+
+Freedom Magic is a resource, capped at 5.  These points can be spent to
+cast a variety of guild skills.  Some skills may cost more points than
+others.
+
+Requirements to join: 150 wil, 150 dex, 35 shield   (?)
+
+This is essentially a warrior mage guild with a redneck theme, and focuses
+on shield related combat.  The guild will be housed in Hillbilly Cabal.
+-------------------------------------------------------------------------------
+Freedom Magic:  
+
+The primary resource of the guild.  This will be displayed everytime the
+player is hit, similar to Charge for capacitors and Force Power for Padawan.
+
+The resource is capped at 5, to promote players to use these charges rather
+than save them for certain situations.  Hill Wizards don't think ahead, they
+just do magic, because magic.
+-------------------------------------------------------------------------------
+Summon Shield:
+
+This spell summons a magic buckler for the player to use.  The shield has a
+weight of 0, and cannot be dropped, given away, or sold.
+
+Blocks with the shield cost a chunk of mana, and award a Freedom Magic point.
+
+Attempted blocks without the required amount of mana will shatter the shield,
+inflicting damage to everyone in the room, especially the wearer.  A new 
+shield can easily be resummoned.  Casting the spell will consume 100% of
+your mana pool.  This is the only spell Hill Wizards cast that directly 
+costs mana, and it is the only real magic they have knowledge of.
+
+Higher levels of this skill provide additional benefits.  For example, 
+additional resistances, ac, reflective damage, defensive level bonuses, etc.
+-------------------------------------------------------------------------------
+Blockade:
+
+This skill, when trained to 1, will convert all dodges performed by
+Hill Wizards into blocks.  This will let dodge remain relevant, while
+generating more Freedom Magic points as well.
+
+Higher levels of blockade will also increase the block chance.
+-------------------------------------------------------------------------------
+Think 'bout Stuff:
+
+This spell allows a Hill Wizard to regain mana at a much faster rate than
+normal resting.  At higher levels, it also has a chance on heartbeat to
+restore a Freedom Magic point.
+-------------------------------------------------------------------------------
+Cook Meth:
+
+Methamphetamine is a powerful performance enhancing drug, utilized only
+by Hill Wizards.  Anyone not in this specialization will receive a
+message, something like "You have too much common sense to use this,"
+or "Meth: not even once."  Alternatively, consumption will not provide
+non-Hill Wizards with a buff, but just inflict damage and reduce stats.
+Hill Wizards who attempt to consume meth not cooked by them will receive
+a message like "You don't trust what you don't cook."
+
+When you consume your own meth, you gain a buff to your str, dex, and crit.
+Higher levels may also effect other stats.
+
+Meth can only be cooked in a Hill Wizard meth lab, and will require some 
+coins to handle the costs of the materials.  This should be streamlined,
+rather than requiring every ingredient individually.  You're just paying
+for the use of the lab, and the materials are provided by the lab.
+-------------------------------------------------------------------------------
+Wizardy Smash - Cost: 1 Freedom Magic
+
+This combat attack ability is performed with the equipped melee weapon, 
+but the nature of the strike is magical.  The damage dealt from this
+attack will be fairly low, perhaps even zero for less skilled players,
+but will lower the victim's magical resistances.  At lower levels (0-19) it
+will only reduce one magical school.  20-29 will reduce two schools, 30-39
+will reduce three schools, and 40+ will reduce all four spell schools.
+-------------------------------------------------------------------------------
+Sling Spell - Cost: 3 Freedom Magic
+
+This is the primary damage dealing spell for the Hill Wizard guild.  The spell
+requires 3 Freedom Magic points to cast, but has a chance to consume up to all
+5.  When this overload ocurrs, bonus damage will be dealt, but this effect is
+entirely random, and uneffected by higher skill levels.  This results in a
+fairly random, uncontrollable feeling of the spell, while ensuring it is always
+worth casting.
+
+The spell selects a random damage type from the four schools of Hill Wizardy:
+Magic (Arcane), Fire Magic, Frozen Magic, Electrical Magic.
+-------------------------------------------------------------------------------
+Battle Barrier - Cost: X Freedom Magic (set # in balance pass)
+
+Create a magical barrier to surround the caster.  A successful cast will
+summon a magical damage absorption on the caster, eating a set amount
+of damage, determined by skill and stat levels.  You take zero damage
+while the shield holds, as damage is dealt into the shield instead.
+
+There are two failure casts on this spell.  A hard fail will have no effect,
+other than consuming Freedom Magic, but a secondary failure will create a
+lesser form of damage absorption shield, where damage taken is redirected
+into their mana and fatigue pools.
+-------------------------------------------------------------------------------
+Wind Whip - Cost: 1 Freedom Magic
+
+This is a utility spell, however its usefulness is lowered by its random
+nature.  A successful spell cast will randomly select one of these three
+effects:  Disarm, Trip (Delay), or Damage.  The player has no control over
+which effect takes place, and higher skill levels do not change the odds.
+Skill level will effect overall success of the spell, the second disarm
+saving roll, trip delay duration, or damage.
+-------------------------------------------------------------------------------
+Windprisonment - Cost 2 Freedom Magic
+
+Successful casts spawn a circular wall of wind around the victim.  The
+winds reduce offensive and defensive bonuses, lower dodge chance, dex,
+and inhibit fleeing both as a flee skill reduction, and by actively forcing
+fleeing windprisoned players to hit a saving roll.
+
+High levels of the skill may also reduce damage dealt.  Check on balance pass.
+-------------------------------------------------------------------------------
+Magic Twister - Passive, always on.
+
+Capped at 1, this passive spell will be very expensive, in the ballpark 
+of 250 million.  When trained, a tornado of magic surrounds the caster.
+Which type of magic surrounds the caster is selected at random, between 
+the four schools of Hill Wizardry.  When you are struck in combat, some
+damage is dealt to the attacker.
+
+-------------------------------------------------------------------------------
+Proficiencies:
+
+As a specialization of the Fighter guild, Hill Wizards will have access to
+essentially every proficiency type at an already relatively low cost.  However,
+to emphasize the use of light, one handed weapons, all light proficiency types,
+in addition to hands and knife prof, will be set just slightly cheaper than
+in the guild itself.
+-------------------------------------------------------------------------------

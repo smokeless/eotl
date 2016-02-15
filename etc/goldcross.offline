@@ -1,0 +1,728 @@
+// Created by Locus@EotL 11/20/95
+inherit RoomCode;
+
+#define XMEN       "/zone/present/xmen"
+#define LOUNGE     "/zone/null/eternal/lounge/lounge"
+#define TECHNICIAN XMEN + "/monsters/technician"
+
+#define HELP1      XMEN + "/temp/obj/HELP1"
+#define HELP2      XMEN + "/temp/obj/HELP2"
+#define HELP3      XMEN + "/temp/obj/HELP3"
+#define HELP4      XMEN + "/temp/obj/HELP4"
+#define CLONEBANK  XMEN + "/temp/obj/clonebank"
+#define STARTCLONE XMEN + "/temp/obj/CLONES.o"
+#define GOODCLONE  XMEN + "/temp/obj/CLONES.o"
+#define BADCLONE   XMEN + "/temp/obj/CLONES.o"
+#define REVIVED    XMEN + "/temp/obj/CLONES.o"
+#define DELETECLONE XMEN + "/temp/obj/CLONES.o"
+#define DESTRUCT    XMEN + "/temp/obj/CLONES.o"
+
+#define EVAL( x )  MISCFUN->evaluation( x )
+#define BASECOST   100
+#define COST( x )  EVAL( x ) * EVAL( x ) * BASECOST  // Exponential costs
+
+#define SPECIAL   0
+#define GUILD     1
+#define STATS     2
+#define SKILLS    3
+#define PROFS     4
+#define DATE      5
+
+int abort, *stats;
+string guild, special;
+mapping skills, profs, clonebank;
+
+extra_create()
+{
+    set( NoPKP, 1 );
+    set( NoCombatP, 1 );
+    set( "short", "The Xmen Gold Cross[tm]" );
+    set( "day_long",
+         "This posh and highly elegant place is the front office of the " +
+         "Xmen branch of the Gold Cross.  The ostentatious display of wealth " +
+         "and power bears silent testimony to the highly lucrative business " +
+         "of resurrecting people from death.  The high arched ceiling towers " +
+         "high over your head, soaring above the lush flora decorating the " +
+         "place.  East is the Xmen Transporter room.  " +
+         endl
+       );
+//       "There is a Gold Cross specialist waiting to serve you." );
+    set( "day_light", 10 );
+    set( "exits",
+         ([ "north":LOUNGE,
+            "east":"trans",
+            "west":"bank",
+ ])
+       );
+
+    set( "reset_data",
+       ([ "tech":TECHNICIAN,
+       ]) );
+
+    if( !clonebank )
+        clonebank = ([]);  // Initialize the clonebank
+    write_file( STARTCLONE, "STARTED: " + ctime() + " " + endl );
+
+} // extra_create()
+
+extra_init()
+{
+    add_action( "do_cost",   "cost"   );
+    add_action( "do_buy",    "buy"    );
+    add_action( "do_revive", "revive" );
+    add_action( "do_check",  "check"  );
+    add_action( "list_clones", "list" );
+    add_action( "do_help", "help" );
+}
+
+query_cost( object client )
+{
+    int cost;
+
+    cost = objectp( client ) ? COST( client ) : COST( THISP );
+    return( cost > 0 ? cost : -cost );  // Make sure we don't give them money
+} // query_cost()
+
+do_cost( object client )
+{
+    string name;
+    int cost;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    name = client->query_name();
+    cost = query_cost( client );
+
+    tell_object( client, "A new clone would cost you " + cost + " coins." +
+                 endl );
+    tell_room( ENV( client ), name + " finds out it would cost " +
+               objective( THISP ) + " " + cost + " coins to buy a new clone." +
+               endl, ({ client }) );
+
+    return 1;
+} // do_cost() 
+
+do_buy( string str, object client )
+{
+    string name, rname;
+    int money, cost;
+
+    if( str != "clone" && str != "YES" ) return 0;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    name  = client->query_name();
+    rname = client->query_real_name();
+    money = client->query_money();
+    cost  = query_cost( client );
+
+    if( money < cost )  // check to see if they have enough money 
+    {
+        tell_object( client, "Gold Cross is not a bank." + endl +
+
+                     "Please come back when you have the " + cost +
+                     " coins." + endl );
+        tell_room( ENV( client ), name + " gets denied a Gold Cross clone." +
+                   name + " didn't have the " + cost + " coins needed." +
+                   endl, ({ client }) );
+        return 1;
+    } // if 
+
+    if( query_clone( client ) && str != "YES" )
+    {
+        tell_object( client, "You already have a clone!" + endl + "If you " +
+                     "wish to buy a new clone anyways, type: buy YES" + endl );
+        return 1;
+    } // if
+
+    if( save_clone( client ) )        // Make sure the cloning was successful 
+    {
+        client->add_money( -cost );
+        tell_object( client, "Cloning completed.  Thank you for using Gold " +
+                     "Cross." + endl + "Total costs: " + cost + endl );
+        tell_room( ENV( client ), name + " pays " + cost + " for a Gold " +
+                   "Cross clone!" + endl, ({ client }) );
+        return 1;
+    } // if
+    else
+    {
+        tell_object( client, "Problem cloning.  Transaction aborted.  " +
+                     "Please try again later." + endl );
+        tell_room( ENV( client ), name + " has a problem with " +
+                   possessive( client ) + " clone." + endl, ({ client }) );
+        write_file( BADCLONE, "BAD CLONE: " + pad( capitalize( rname ), 15 ) +
+                    " " + ctime() + " " + endl + filename( ENV( client ) ) + endl );
+        delete_clone( rname );  // Remove the bad clone
+        return 1;
+    } // else
+
+    return 0; // Doubt if it'll ever get this far, but what the hell
+} // do_buy() 
+
+delete_clone( string rname )
+{
+    object revivee;
+
+    if( PRNAME != rname )
+        write_file( DELETECLONE, "DELETED: " + capitalize( rname ) + " by " +
+                    capitalize( PRNAME ) + " " + ctime() + endl );
+
+    if( !rname ) return 0;
+    if( !catch( revivee = FINDP ( rname ) ) )
+        catch(
+        tell_object( revivee, capitalize( PRNAME ) + " has removed your " +
+                     "clone." + endl + capitalize( rname ) + "'s clone " +
+                     "removed from clonebank at " + ctime() + "." + endl )
+             ); // catch
+
+    if( catch( m_delete( clonebank, rname ) ) )
+        return 0;
+
+    return 1;
+} // delete_clone()
+
+save_clone( object client )
+{
+    int i, j, date;
+    string rname;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    rname = client->query_real_name();
+
+//  Get their stats, skills, proficiencies, and guild
+    tell_object( client, "CLONING:" + endl );
+
+    stats =  client->query_stats();
+    tell_object( client, "\t...stats" + endl );
+
+    skills = copy_mapping( client->query_skill_map() );
+    tell_object( client, "\t\t...skills" + endl );
+
+    profs =  copy_mapping( client->query_proficiency_map() );
+    tell_object( client, "\t\t\t...proficiencies" + endl );
+
+    guild = client->query_guild();
+    tell_object( client, "\t\t\t\t\t...guild" + endl );
+
+    special = client->query_specialization();
+    tell_object( client, "\t\t\t\t\t\t...specialization" + endl );
+
+    date = time();
+
+//  Add them to the clonebank
+    clonebank += ([ rname: special; guild; stats; skills; profs; date ]);
+
+    write_file( GOODCLONE, "Cloned: " + pad( capitalize( rname ), 15 ) + " " +
+                ctime() + " " + endl + file_name( ENV( client ) ) + endl );
+    tell_object( client, "\t--CLONED--" + endl );
+
+/*  Disabled for now
+    if( !pointerp( stats  ) ) return 0;
+    if( !mappingp( skills ) ) return 0;
+    if( !mappingp( profs  ) ) return 0;
+    if( !stringp(  guild  ) ) return 0;
+*/
+//  tell_object( client, "Cloning complete." + endl );
+
+    return 1;  
+} // save_clone()
+
+do_check( object client )
+{
+    string name, rname;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    name  = client->query_name();
+    rname = client->query_real_name();
+
+    if( query_clone( client ) )
+    {
+        tell_object( client, "You have a clone!  Bought: " +
+                     ctime( clonebank[ rname, 5 ] ) + endl );
+        list_clone_stats(  rname );
+        list_clone_skills( rname );
+        list_clone_profs(  rname );
+        tell_room( ENV( client ), name + " checks on the status of " +
+                   possessive( client ) + " clone." + endl, ({ client }) );
+        return 1;
+    } // if
+    
+    tell_object( client, "You don't have a clone!  A new one would cost you " +
+                 query_cost( client ) + " coins." + endl );
+    tell_room( ENV( client ), name + " finds out " + subjective( client ) +
+               " doesn't have a clone!" + endl, ({ client }) );
+
+    return 1;
+} // do_check() 
+
+list_mapping( mapping map )
+{
+    string *map_index, map_list;
+    int i, j;
+
+    if( !mappingp( map ) ) return 0;
+
+    map_index = m_indices( map );
+    map_list = ({ });
+
+    // Sort the array to make things look neat
+    map_index = sort_array( map_index, #'> );
+
+    // Get the value for each mapping and add it to the list
+    for( i = 0, j = sizeof( map_index ); i < j; i++ )
+        map_list += ({ pad( sprintf( "%s: %d", map_index[ i ],
+                       map[ map_index[ i ] ] ), 20 )[0..19] });
+
+    return( sprintf( "%-78#s" + endl, implode( map_list, endl ) ) );
+} // list_mapping()
+
+list_clone_stats( string rname )
+{
+    int *stats;
+
+    if( PRNAME != rname && !IsWizard( THISP ) ) return 0;
+
+    if( !pointerp( stats = clonebank[ rname, STATS ] ) ) return 0;
+
+    tell_object( THISP, "Clone stats: " + endl + 
+                      "Str: " + stats[ 0 ] + ", " +
+                      "Int: " + stats[ 1 ] + ", " +
+                      "Wil: " + stats[ 2 ] + ", " +
+                      "Con: " + stats[ 3 ] + ", " +
+                      "Dex: " + stats[ 4 ] + ", " +
+                      "Chr: " + stats[ 5 ] +
+                      endl + endl );
+    return 1;
+} // list_clone_stats()
+
+list_clone_skills( string rname )
+{
+    mapping skills_map;
+
+    if( PRNAME != rname && !IsWizard( THISP ) ) return 0;
+
+    if( !mappingp( skills_map = clonebank[ rname, SKILLS ] ) ) return 0;
+    
+    
+    tell_object( THISP, "Clone skills:" + endl +
+                 list_mapping( skills_map ) +
+                 "Total skills: " + sizeof( m_indices( skills_map ) ) + 
+                 endl + endl );
+    return 1;
+} // list_clone_skills()
+
+list_clone_profs( string rname )
+{
+    mapping profs_map;
+
+    if( PRNAME != rname && !IsWizard( THISP ) ) return 0;
+
+    if( !mappingp( profs_map = clonebank[ rname, PROFS ] ) ) return 0;
+
+    tell_object( THISP, "Clone profs:" + endl +
+                 list_mapping( profs_map ) +
+                 "Total proficiencies: " + sizeof( m_indices( profs_map ) ) +
+                 endl + endl );
+    return 1;
+} // list_clone_profs()
+
+query_clone( object client )
+{
+    string rname;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    rname = client->query_real_name();
+
+    if( !member( clonebank, rname ) ) return 0;
+
+    special = clonebank[ rname, 0 ];  // Retrieve their specialization 
+    guild   = clonebank[ rname, 1 ];  //                guild,
+    stats   = clonebank[ rname, 2 ];  //                stats,
+    skills  = clonebank[ rname, 3 ];  //                skills,
+    profs   = clonebank[ rname, 4 ];  //             and profs
+
+    return 1;
+} // query_clone()
+
+query_clone_list( object client )
+{
+    return( m_indices( clonebank ) ); // Sorry, only allowing the master server
+} // query_clone_list()                  to modify the clonebank mapping
+
+list_clones( string str, object client )
+{
+    string *clones, clone_list;
+    int i, j;
+
+    if( str != "clones" ) return 0;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    if( !IsWizard( client ) )
+    {
+        tell_object( client, "Sorry, only Wizards may check on clones." + 
+                     endl );
+        return 1;
+    }
+
+    clones = query_clone_list();
+    clone_list = endl;
+    
+    for( i = 0, j = sizeof( clones ); i < j; i++ )
+    {
+        clone_list += pad( capitalize( clones[ i ] ), 16 );
+        if( !( i % 4 ) )
+            clone_list += endl;
+    }
+
+    tell_object( client, clone_list + "Total clones: " + i + endl );
+    return 1;
+} // list_clones()
+
+do_revive( object client )
+{
+    string name, rname;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    if( client->query_ghost() )   // Make sure they're no longer a ghost
+    {
+        client->make_me_alive();
+        client->full_heal();
+    } // if
+
+    name  = client->query_name();
+    rname = client->query_real_name();
+
+    if( !query_clone( client ) )
+    {
+        tell_object( client, "You don't have a clone!" + endl );
+        tell_room( ENV( client ), name + " finds out " + subjective( client ) +
+                   " doesn't have a clone!" + endl, ({ client }) );
+        return 1;
+    } // if
+ 
+    tell_object( client, "REVIVING CLONE:" + endl + endl );
+
+//  remove_shadows(     client );     // Prevent shadows from interfering
+
+    if( change_special(  client, special ) ) // Restore their specialization,
+    if( change_guild(    client, guild   ) ) //               guild,
+    if( change_stats(    client, stats   ) ) //               stats,
+    if( change_skills(   client, skills  ) ) //               skills,
+    if( change_profs(    client, profs   ) ) //           and profs
+//  if( restore_shadows( client ) )   // Restore any shadows they might have
+    {
+        client->full_heal();          // Heal em so they don't die right away
+
+        tell_object( client, "You have been successfully transferred to " +
+                     "your clone!" + endl + "You feel happy to be alive :)" +
+                     endl );
+        tell_room( ENV( client ), capitalize( rname ) + " has been " +
+                   "successfully transferred to " + possessive( client ) +
+                   " clone!" + endl + "Another satisfied Gold Cross customer!"
+                   + endl, ({ client }) );
+
+//      Wipe out their clone after it's been used
+        client->save_me();
+        catch( delete_clone( rname ) );  
+        write_file( REVIVED, "REVIVED: " + pad( capitalize( rname ), 15 ) + " " +
+                    ctime() + " " + endl + file_name( ENV( client ) ) + endl );
+    } // if
+    return 1;
+} // do_revive()
+
+change_special( object client, string clone_special )
+{
+    string name, current_special;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    name = client->query_name();
+    current_special = client->query_specialization();
+
+    if( clone_special != current_special ) 
+    {
+        tell_object( client, "Your specialization is different from your " +
+                     "clone's!  Aborting transfer." + endl );
+        tell_room( ENV( client ), name + "'s specialization was different " +
+                   "from " + possessive( client ) + " clone.  " +
+                   "Transfer aborted." + endl, ({ client }) );
+        return 0;
+    } // if
+/*
+//  Clear their specialization
+//  client->set_specialization( 0, 0 );
+*/
+    if( !stringp( clone_special ) )
+    {
+        tell_object( client, "No specialization to restore." + endl + endl );
+        return 1;
+    } // if
+
+    client->set_specialization( clone_special );
+
+    tell_object( client, "Specialization successfully restored." + endl );
+
+    return 1;
+} // change_special()
+
+change_guild( object client, string clone_guild )
+{
+    string name, current_guild;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    name = client->query_name();
+    current_guild = client->query_guild();
+
+    if( clone_guild != current_guild ) 
+    {
+        tell_object( client, "Your guild is different from your clone's!  " +
+                     "Aborting transfer." + endl );
+        tell_room( ENV( client ), name + "'s guild was different from " +
+                   possessive( client ) + " clone.  Transfer aborted. " + 
+                   endl, ({ client }) );
+        return 0;
+    } // if
+/*
+//  Clear their guild
+//  client->set_guild( 0, 0 );
+*/
+    if( !stringp( clone_guild ) )
+    {
+        tell_object( client, "No guild to restore." + endl + endl );
+        return 1;
+    } // if
+
+    client->set_guild( clone_guild );
+
+    tell_object( client, "Guild successfully restored." + endl );
+
+    return 1;
+} // change_guild()
+
+change_stats( object client, int *clone_stats )
+{
+    string name, statcheck, *statlist;
+    int i, j;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+    if( !pointerp( clone_stats ) )
+    {
+        tell_object( client, "No stats found!  Aborting transfer." + endl );
+        tell_room( ENV( client ), name + "'s clone has no stats!  Transfer " +
+                   "aborted." + endl, ({ client }) );
+        return 0;
+    } // if 
+
+    statcheck = endl;
+
+//  Restore their stats
+    client->change_stat( "str", clone_stats[0] );
+    tell_object( client, "Str: " + clone_stats[ 0 ] + ", " );
+
+    client->change_stat( "int", clone_stats[1] );
+    tell_object( client, "Int: " + clone_stats[ 1 ] + ", " );
+
+    client->change_stat( "wil", clone_stats[2] );
+    tell_object( client, "Wil: " + clone_stats[ 2 ] + ", " );
+
+    client->change_stat( "con", clone_stats[3] );
+    tell_object( client, "Con: " + clone_stats[ 3 ] + ", " );
+
+    client->change_stat( "dex", clone_stats[4] );
+    tell_object( client, "Dex: " + clone_stats[ 4 ] + ", " );
+
+    client->change_stat( "chr", clone_stats[5] );
+    tell_object( client, "Chr: " + clone_stats[ 5 ] + endl );
+
+/*  Disabled for now
+    statcheck = endl;
+    stat_list = m_indices( clone_stats );
+
+//  Restore their stats
+    for( i = 0, j = sizeof( stat_list ); i < j; i++ )
+    {
+        stat = stat_list[ i ];  // Used this for the sake of clarity
+        client->change_stat( stat, clone_stats[ stat ] );
+        statcheck += capitalize( stat ) + " " + clone_stats[ stat ] + "...";
+        tell_object( client, capitalize( stat ) + " " + clone_stats[ stat ] +
+                     "..." );
+    } // for
+*/
+
+    tell_object( client,
+                 "Stats successfully restored." + endl + endl );
+
+    return 1;
+} // change_stats() 
+
+change_skills( object client, mapping clone_skills )
+{
+    string skill, skillcheck, *skill_list;
+    mapping current_skills;
+    int i, j;
+
+    if( !objectp( client ) )
+        client = THISP;
+
+//  Clear all previous skills
+    current_skills = client->query_skill_map();
+    current_skills = ([]);
+
+/*  In case the above doesn't work 
+*/
+    current_skills = client->query_skill_map();
+    skill_list = m_indices( current_skills );
+    for( i = 0, j = sizeof( skill_list ); i < j; i++ )
+        client->set_skill( skill_list[ i ], 0 );
+
+    if( !mappingp( clone_skills ) )
+    {
+        tell_object( client, "No skills to restore." + endl );
+        return 1;
+    } // if
+
+    skillcheck = endl;
+    skill_list = m_indices( clone_skills );
+
+//  Restore their skills
+    for( i = 0, j = sizeof( skill_list ); i < j; i++ )
+    {
+        skill = skill_list[ i ];  // Used this for the sake of clarity
+        client->set_skill( skill, clone_skills[ skill ] );
+
+//      pretty formatting for clients to see skills being changed
+        skillcheck = pad( skill + ": " + clone_skills[ skill ], 26 );
+        skillcheck += ( ( i + 1 ) % 3 ? "" : endl );
+        tell_object( client, skillcheck );
+    } // for
+
+    tell_object( client, ( ( i + 1 ) % 3 ? "" : endl ) +
+                 "Skills successfully restored" + endl + endl );
+    return 1;
+} // change_skills()
+
+change_profs( object client, mapping clone_profs )
+{
+    string prof, profcheck, *prof_list;
+    mapping current_profs;
+    int i, j;
+
+//  Clear all previous proficiencies
+    current_profs = client->query_proficiency_map();
+    current_profs = ([]);
+
+/*  In case the above doesn't work 
+*/
+    current_profs = client->query_proficiency_map();
+    prof_list = m_indices( current_profs );
+    for( i = 0, j = sizeof( prof_list ); i < j; i++ )
+        client->set_proficiency( prof_list[ i ], 0 );
+
+    if( !mappingp( clone_profs ) )
+    {
+        tell_object( client, "No proficiencies to restore." + endl );
+        return 1;
+    } // if
+
+    profcheck = endl;
+    prof_list = m_indices( clone_profs );
+
+//  Restore their proficiencies
+    for( i = 0, j = sizeof( prof_list ); i < j; i++ )
+    {
+        prof = prof_list[ i ];
+        THISP->set_proficiency( prof, profs[ prof ] );
+
+//      pretty formatting for clients to see profs being changed
+        profcheck = pad( prof + ": " + clone_profs[ prof ], 26 );
+        profcheck += ( ( i + 1 ) % 3 ? "" : endl );
+        tell_object( client, profcheck );
+    } // for
+
+    tell_object( client, ( ( i + 1 ) % 3 ? "" : endl ) +
+                 "Proficiencies successfully restored." endl + endl );
+    return 1;
+} // change_profs()
+
+do_help( string str, object client )
+{
+    if( !objectp( client ) )
+        client = THISP;
+
+    switch( str )
+    {
+        case "clone"     :
+        case "Clone"     :
+        case "CLONE"     :
+        case "clones"    :
+        case "Clones"    :
+        case "CLONES"    :
+        case "goldcross" :
+        case "Goldcross" :
+        case "GOLDCROSS" :
+        case "gold cross":
+        case "Gold Cross":
+        case "Gold cross":
+        case "GOLD CROSS":
+        case "gold Cross": // General introduction to Gold Cross
+                           client->more_string( read_file( HELP1 ) );
+                           return 1; break;
+
+        case "commands"  :
+        case "Commands"  :
+        case "COMMANDS"  : // List of mortal commands
+                           if( !IsWizard( client ) )
+                           {
+                               client->more_string( read_file( HELP2 ) );
+                               return 1; break;
+                           } // if
+
+                           // List of wizard commands
+                           client->more_string( read_file( HELP3 ) );
+                           return 1; break;
+
+        case "answer"    :
+        case "Answer"    :
+        case "ANSWER"    :
+        case "answers"   :
+        case "Answers"   :
+        case "ANSWERS"   : // Answers to common questions
+                           client->more_string( read_file( HELP4 ) );
+                           return 1; break;
+
+        default          : return 0;
+    }
+
+    return 0; // just in case the default doesn't get called
+} // help()
+
+destruct_signal()
+{
+    write_file( DESTRUCT, "DESTRUCTED: " + capitalize( PRNAME ) + " " +
+                ctime() + " Gold Cross" + endl );
+    if( FINDP( "locus" ) )
+        tell_object( FINDP( "locus" ), capitalize( PRNAME ) + " dested " +
+                     "Gold Cross " + ctime() + endl );
+    shout( capitalize( PRNAME ) + " has just reset Gold Cross." + endl +
+           "If you had a clone, then kiss that sucker goodbye." + endl +
+           "This has been a public service announcement by Gold Cross " +
+           ctime() + "." + endl );
+    return 0;
+}
